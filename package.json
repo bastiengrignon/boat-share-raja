@@ -1,0 +1,32 @@
+{
+  "name": "turborepo-starter",
+  "description": "Monorepo starter for turborepo",
+  "private": true,
+  "version": "0.0.1",
+  "author": {
+    "name": "Bastien Grignon",
+    "email": "basgrignon@gmail.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "check-types": "turbo run check-types",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.2"
+  },
+  "packageManager": "yarn@1.22.22",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "volta": {
+    "node": "22.18.0",
+    "yarn": "1.22.22"
+  }
+}
