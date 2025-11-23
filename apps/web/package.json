@@ -1,0 +1,45 @@
+{
+  "name": "web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@mantine/core": "^8.3.2",
+    "@mantine/form": "^8.3.2",
+    "@mantine/hooks": "^8.3.2",
+    "@mantine/notifications": "^8.3.2",
+    "@tanstack/react-query": "^5.90.2",
+    "@tanstack/react-query-devtools": "^5.90.2",
+    "better-auth": "^1.3.18",
+    "i18next": "^25.5.2",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "react": "^19.1.1",
+    "react-country-flag": "^3.1.0",
+    "react-dom": "^19.1.1",
+    "react-i18next": "^15.7.4",
+    "react-icons": "^5.5.0",
+    "react-router": "^7.9.3"
+  },
+  "devDependencies": {
+    "@turborepo-starter/typescript-config": "*",
+    "@types/react": "^19.1.14",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react-swc": "^4.1.0",
+    "globals": "^16.4.0",
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "~5.9.2",
+    "vite": "^7.1.11",
+    "vite-tsconfig-paths": "^5.1.4"
+  },
+  "volta": {
+    "node": "22.18.0",
+    "yarn": "1.22.22"
+  }
+}
