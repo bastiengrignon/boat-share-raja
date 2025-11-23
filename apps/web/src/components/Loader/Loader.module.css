@@ -1,0 +1,9 @@
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.infiniteRotate {
+    animation: spin 2s linear infinite;
+}

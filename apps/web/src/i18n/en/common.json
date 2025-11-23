@@ -1,0 +1,35 @@
+{
+  "appName": "My app",
+  "header": {
+    "logout": "Logout",
+    "settings": "Settings"
+  },
+  "save": "Save",
+  "error": "Error",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "languages": {
+    "en": "English",
+    "fr": "French"
+  },
+  "settings": {
+    "account": {
+      "title": "Account",
+      "personalInformation": "Personal information",
+      "password": "Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "updatePassword": "Update password",
+      "resetPassword": "Reset password",
+      "emailResetTitle": "Email sent",
+      "emailResetMessage": "An email has been sent to reset your password.",
+      "dangerZone": "Danger zone",
+      "delete": {
+        "title": "Delete account",
+        "confirmAccount": "To delete your account, please enter your email address below",
+        "confirm": "Are you sure you want to delete your account ?"
+      }
+    }
+  }
+}
