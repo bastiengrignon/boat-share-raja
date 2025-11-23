@@ -1,0 +1,81 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false
+  },
+  "files": {
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "!**/dist",
+      "!**/build",
+      "!**/node_modules",
+      "!**/prisma",
+      "!**/.turbo",
+      "!**/*.d.ts"
+    ],
+    "ignoreUnknown": false
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "bracketSameLine": false,
+    "bracketSpacing": true
+  },
+  "linter": {
+    "enabled": true,
+    "domains": {
+      "react": "recommended"
+    },
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "error",
+        "noUnusedImports": "error",
+        "useParseIntRadix": "error"
+      },
+      "style": {
+        "noNestedTernary": "warn",
+        "useConsistentCurlyBraces": "error",
+        "useTemplate": "error",
+        "useSelfClosingElements": "error",
+        "useObjectSpread": "error"
+      }
+    }
+  },
+  "javascript": {
+    "globals": ["_"],
+    "formatter": {
+      "quoteStyle": "single",
+      "arrowParentheses": "always",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "es5"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":NODE:",
+              ":BLANK_LINE:",
+              ":PACKAGE_WITH_PROTOCOL:",
+              ":PACKAGE:",
+              ":BLANK_LINE:",
+              ":ALIAS:",
+              ":BLANK_LINE:",
+              ":PATH:"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
