@@ -13,7 +13,7 @@ const healthcheckGetSchema = {
 };
 
 export const healthcheckRoutes = (app: FastifyInstance) => {
-  app.get('/', { schema: healthcheckGetSchema }, () => ({
+  app.get('', { schema: healthcheckGetSchema }, () => ({
     status: 'OK',
     message: 'API is healthy',
   }));

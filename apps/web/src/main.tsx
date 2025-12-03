@@ -14,6 +14,7 @@ import './lib/i18n';
 
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 
 // biome-ignore lint/style/noNonNullAssertion: root is defined
 createRoot(document.getElementById('root')!).render(

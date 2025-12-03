@@ -1,0 +1,12 @@
+{
+  "myMessages": "My messages",
+  "noMessages": "No conversation",
+  "lastMessage": "<b>{{name}}:</b> {{message}}",
+  "lastMessageUserMe": "Me",
+  "messagePlaceholder": "Write a message...",
+  "request": {
+    "yourRequest": "You have made a request to share a boat. You will receive a message when your request is accepted or declined.",
+    "accept": "Accept",
+    "decline": "Decline"
+  }
+}

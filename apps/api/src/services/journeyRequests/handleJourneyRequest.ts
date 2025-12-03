@@ -1,0 +1,102 @@
+import type { ApiResult, JourneyRequestAcceptation } from '@boat-share-raja/shared-types';
+import type { FastifyRequest } from 'fastify';
+
+import { AUTOMATED_MESSAGES } from '../../constants';
+import { sendMessageInConversation } from '../../utils/message';
+
+export const handleJourneyRequest = async (
+  req: FastifyRequest<{ Body: JourneyRequestAcceptation }>
+): Promise<ApiResult<object>> => {
+  const { accepted, requestId } = req.body;
+
+  const journeyRequest = await req.prisma.journeyRequest.findFirst({
+    where: { id: requestId },
+    include: {
+      journey: {
+        select: {
+          userId: true,
+        },
+      },
+      requester: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  });
+  if (!journeyRequest) {
+    req.log.error('Journey request not found for the given id');
+    return {
+      status: 'ERROR',
+      error: 'REQUEST_NOT_FOUND',
+      data: null,
+    };
+  }
+
+  await req.prisma.journeyRequest.update({
+    where: { id: journeyRequest.id },
+    data: {
+      accepted,
+      acceptedAt: accepted ? new Date() : null,
+      declined: !accepted,
+      declinedAt: accepted ? null : new Date(),
+    },
+  });
+
+  const authorUserId = journeyRequest.journey.userId;
+  const requesterUserId = journeyRequest.requester.id;
+
+  const conversation = await req.prisma.conversation.findFirst({
+    where: {
+      isGroup: false,
+      participants: {
+        every: {
+          userId: {
+            in: [authorUserId, requesterUserId],
+          },
+        },
+      },
+      AND: [
+        { participants: { some: { userId: authorUserId } } },
+        { participants: { some: { userId: requesterUserId } } },
+      ],
+    },
+    include: {
+      participants: true,
+    },
+  });
+  if (!conversation) {
+    req.log.error('Conversation not found for the request');
+    return {
+      status: 'ERROR',
+      error: 'CONVERSATION_NOT_FOUND',
+      data: null,
+    };
+  }
+
+  await sendMessageInConversation(req.prisma)({
+    conversationId: conversation.id,
+    senderId: authorUserId,
+    content: accepted
+      ? AUTOMATED_MESSAGES.REQUEST_PEOPLE_JOURNEY_ACCEPTED.fr
+      : AUTOMATED_MESSAGES.REQUEST_PEOPLE_JOURNEY_DECLINED.fr,
+  });
+
+  if (accepted) {
+    await req.prisma.journey.update({
+      where: {
+        id: journeyRequest.journeyId,
+      },
+      data: {
+        numberOfPeople: {
+          increment: journeyRequest.people,
+        },
+      },
+    });
+  }
+
+  return {
+    status: 'SUCCESS',
+    data: null,
+  };
+};

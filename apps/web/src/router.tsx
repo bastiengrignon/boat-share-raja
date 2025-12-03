@@ -1,65 +1,60 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router';
 
-const Login = lazy(() => import('./pages/Login'));
-const SignUp = lazy(() => import('./pages/SignUp'));
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+import Conversation from './components/Conversation';
+
 const Home = lazy(() => import('./pages/Home'));
 const Settings = lazy(() => import('./pages/Settings'));
-const PrivateRoute = lazy(() => import('./components/PrivateRoute'));
 const Layout = lazy(() => import('./layout/Layout'));
+const MyMessages = lazy(() => import('./pages/MyMessages'));
+const MyJourneys = lazy(() => import('./pages/MyJourneys'));
 
 interface Routes {
   home: string;
-  login: string;
-  signup: string;
+  journeys: string;
+  messages: {
+    home: string;
+    conversation: string;
+  };
   settings: string;
-  forgotPassword: string;
-  resetPassword: string;
 }
 
 export const routes: Routes = {
   home: '/',
-  login: '/login',
-  signup: '/signup',
+  journeys: '/journeys',
+  messages: {
+    home: '/messages',
+    conversation: '/messages/:conversationId',
+  },
   settings: '/settings',
-  forgotPassword: '/forgot-password',
-  resetPassword: '/reset-password',
 };
 
 export const router = createBrowserRouter([
   {
-    element: (
-      <PrivateRoute>
-        <Layout />
-      </PrivateRoute>
-    ),
+    Component: Layout,
     children: [
       {
         path: routes.home,
-        element: <Home />,
+        Component: Home,
+      },
+      {
+        path: routes.journeys,
+        Component: MyJourneys,
+      },
+      {
+        path: routes.messages.home,
+        children: [
+          { index: true, Component: MyMessages },
+          {
+            path: ':conversationId',
+            Component: Conversation,
+          },
+        ],
       },
       {
         path: routes.settings,
-        element: <Settings />,
+        Component: Settings,
       },
     ],
-  },
-  {
-    path: routes.login,
-    element: <Login />,
-  },
-  {
-    path: routes.signup,
-    element: <SignUp />,
-  },
-  {
-    path: routes.forgotPassword,
-    element: <ForgotPassword />,
-  },
-  {
-    path: routes.resetPassword,
-    element: <ResetPassword />,
   },
 ]);

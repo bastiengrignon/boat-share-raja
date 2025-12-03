@@ -1,0 +1,2 @@
+### GET all islands
+GET http://localhost:4000/api/islands

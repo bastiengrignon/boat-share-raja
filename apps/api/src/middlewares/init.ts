@@ -5,15 +5,17 @@ import type { FastifyInstance } from 'fastify';
 
 import { TIME } from '../constants';
 import serverConfig from '../utils/config';
+import { prismaPlugin } from './prisma';
 
 export const initMiddlewares = ({ app }: { app: FastifyInstance }) => {
   app.register(fastifyHelmet);
   app.register(fastifyCompress);
   app.register(fastifyCors, {
     origin: serverConfig.trustedOrigins,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
     credentials: true,
     maxAge: TIME.SECONDS_IN_ONE_DAY,
   });
+  app.register(prismaPlugin);
 };

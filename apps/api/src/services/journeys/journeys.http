@@ -1,0 +1,26 @@
+### GET all journeys
+GET http://localhost:4000/api/journeys
+
+### POST new journey
+POST http://localhost:4000/api/journeys
+Content-Type: application/json
+
+{
+  "user": {
+    "id": "{{$random.uuid}}",
+    "name": "{{$random.name.fullName}}"
+  },
+  "numberOfPeople": 2,
+  "maxNumberOfPeople": 4,
+  "from": "Kri",
+  "to": "Friwen",
+  "date": "2025-11-22T15:00:00.000Z",
+  "price": {{$random.integer()}},
+  "notes": "Trying to split the bill"
+}
+
+### GET my journeys
+GET http://localhost:4000/api/journeys/user/a9d3c48f-1fdb-466e-b9c3-3f62dccb4856
+
+
+

@@ -7,25 +7,124 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  firstName     String?
-  lastName      String?
-  sessions      Session[]
-  accounts      Account[]
+/**
+ * model User {
+ * id            String    @id @default(uuid())
+ * name          String
+ * email         String
+ * emailVerified Boolean
+ * image         String?
+ * createdAt     DateTime  @default(now())
+ * updatedAt     DateTime  @updatedAt
+ * firstName     String?
+ * lastName      String?
+ * sessions      Session[]
+ * accounts      Account[]
+ * @@unique([email])
+ * @@map("user")
+ * }
+ */
+/**
+ * model Session {
+ * id        String   @id
+ * expiresAt DateTime
+ * token     String
+ * createdAt DateTime @default(now())
+ * updatedAt DateTime @updatedAt
+ * ipAddress String?
+ * userAgent String?
+ * userId    String
+ * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * @@unique([token])
+ * @@map("session")
+ * }
+ */
+/**
+ * model Account {
+ * id                    String    @id
+ * accountId             String
+ * providerId            String
+ * userId                String
+ * user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+ * accessToken           String?
+ * refreshToken          String?
+ * idToken               String?
+ * accessTokenExpiresAt  DateTime?
+ * refreshTokenExpiresAt DateTime?
+ * scope                 String?
+ * password              String?
+ * createdAt             DateTime  @default(now())
+ * updatedAt             DateTime  @updatedAt
+ * @@map("account")
+ * }
+ * model Verification {
+ * id         String    @id
+ * identifier String
+ * value      String
+ * expiresAt  DateTime
+ * createdAt  DateTime? @default(now())
+ * updatedAt  DateTime? @updatedAt
+ * @@map("verification")
+ * }
+ */
 
-  @@unique([email])
+model Journey {
+  id                String           @id @default(uuid())
+  userId            String
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  numberOfPeople    Int              @default(0)
+  maxNumberOfPeople Int              @default(0)
+  from              String
+  to                String
+  date              DateTime
+  time              String?
+  price             Int?
+  notes             String?
+  createdAt         DateTime?        @default(now())
+  updatedAt         DateTime?        @updatedAt
+  JourneyRequest    JourneyRequest[]
+
+  @@map("journey")
+}
+
+model JourneyRequest {
+  id          String    @id @default(uuid())
+  requesterId String
+  requester   User      @relation(fields: [requesterId], references: [id], onDelete: Cascade)
+  journeyId   String
+  journey     Journey   @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  people      Int
+  accepted    Boolean   @default(false)
+  acceptedAt  DateTime?
+  declined    Boolean   @default(false)
+  declinedAt  DateTime?
+
+  createdAt DateTime? @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("journey_request")
+}
+
+model User {
+  id                      String                    @id @default(uuid())
+  name                    String
+  email                   String?
+  emailVerified           Boolean                   @default(true)
+  isAnonymous             Boolean?
+  createdAt               DateTime?                 @default(now())
+  updatedAt               DateTime?                 @updatedAt
+  journeys                Journey[]
+  JourneyRequest          JourneyRequest[]
+  ConversationParticipant ConversationParticipant[]
+  Message                 Message[]
+  MessageRead             MessageRead[]
+  Session                 Session[]
+
   @@map("user")
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(uuid())
   expiresAt DateTime
   token     String
   createdAt DateTime @default(now())
@@ -39,32 +138,74 @@ model Session {
   @@map("session")
 }
 
-model Account {
-  id                    String    @id
-  accountId             String
-  providerId            String
-  userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accessToken           String?
-  refreshToken          String?
-  idToken               String?
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
-  password              String?
-  createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+model Island {
+  id        String    @id @default(uuid())
+  name      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 
-  @@map("account")
+  @@map("island")
 }
 
-model Verification {
-  id         String    @id
-  identifier String
-  value      String
-  expiresAt  DateTime
-  createdAt  DateTime? @default(now())
-  updatedAt  DateTime? @updatedAt
+model Conversation {
+  id        String   @id @default(uuid())
+  title     String?
+  isGroup   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@map("verification")
+  participants ConversationParticipant[]
+  messages     Message[]
+
+  // Index éventuel pour filtrer les conversations récentes
+  @@index([updatedAt])
+  @@map("conversation")
+}
+
+model ConversationParticipant {
+  id             String   @id @default(uuid())
+  conversationId String
+  userId         String
+  joinedAt       DateTime @default(now())
+  // role           String   @default("MEMBER")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@map("conversation_participant")
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String
+  senderId       String
+  content        String
+  extra          Json     @default("{}")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  // deletedAt      DateTime?
+
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  reads        MessageRead[]
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
+  @@map("message")
+}
+
+model MessageRead {
+  id        String   @id @default(uuid())
+  messageId String
+  userId    String
+  readAt    DateTime @default(now())
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId])
+  @@index([userId])
+  @@map("message_read")
 }

@@ -1,35 +1,33 @@
 {
-  "appName": "Mon application",
-  "header": {
-    "logout": "Déconnexion",
-    "settings": "Paramètres"
-  },
+  "appName": "Partage de bateau Raja Ampat",
   "save": "Enregistrer",
+  "add": "Ajouter",
+  "update": "Modifier",
   "error": "Erreur",
   "cancel": "Annuler",
   "delete": "Supprimer",
+  "search": "Rechercher",
   "languages": {
     "en": "Anglais",
     "fr": "Français"
   },
+  "header": {
+    "menu": {
+      "myJourneys": "Mes trajets",
+      "myMessages": "Mes messages",
+      "settings": "Paramètres",
+      "lightMode": "Clair",
+      "darkMode": "Sombre"
+    }
+  },
+  "combobox": {
+    "createNewElement": "+ Créer \"<i>{{element}}</i>\""
+  },
   "settings": {
-    "account": {
-      "title": "Compte",
-      "personalInformation": "Information personnelle",
-      "password": "Mot de passe",
-      "currentPassword": "Mot de passe actuel",
-      "newPassword": "Nouveau mot de passe",
-      "confirmNewPassword": "Confirmer le nouveau mot de passe",
-      "updatePassword": "Mettre à jour le mot de passe",
-      "resetPassword": "Réinitialiser le mot de passe",
-      "emailResetTitle": "Email envoyé",
-      "emailResetMessage": "Un mail vous a été envoyé pour réinitialiser votre mot de passe.",
-      "dangerZone": "Zone dangereuse",
-      "delete": {
-        "title": "Supprimer le compte",
-        "confirmAccount": "Pour supprimer votre compte, veuillez saisir votre adresse email ci-dessous",
-        "confirm": "Êtes-vous sur de vouloir supprimer votre compte ?"
-      }
+    "title": "Paramètres",
+    "user": "Paramètres utilisateurs",
+    "errors": {
+      "user": "Le nom doit faire 2 caractères minimum."
     }
   }
 }

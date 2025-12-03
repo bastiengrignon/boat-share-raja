@@ -1,0 +1,48 @@
+{
+  "addJourney": "Ajouter un trajet",
+  "journeysListTitle": "Trajets à venir",
+  "noJourney": "Aucun trajet à venir",
+  "journeyCard": {
+    "peopleOnboard": "{{current}} / {{maximum}} max",
+    "publishedBy": "Publié par {{name}}",
+    "sendMessage": "Envoyer un message",
+    "shareBoat": "Partager le bateau",
+    "shareBoatDisabledAlreadySent": "Vous avez déjà fait une demande",
+    "noPrice": "Pas de prix défini"
+  },
+  "addJourneyForm": {
+    "name": "Prénom / pseudo",
+    "namePlaceholder": "Entrer votre nom ou pseudo",
+    "numberOfPeople": "Nombre de personne à bord",
+    "maxNumberOfPeople": "Nombre de personne max. à bord",
+    "departure": "Point de départ",
+    "departurePlaceholder": "Sélectionner un point de départ",
+    "arrival": "Point d'arrivée",
+    "arrivalPlaceholder": "Sélectionner un point d'arrivée",
+    "date": "Date",
+    "time": "Heure de départ",
+    "price": "Prix",
+    "pricePlaceholder": "Entrer un prix si connu",
+    "notes": "Notes",
+    "notesPlaceholder": "Entrer des détails supplémentaires",
+    "errors": {
+      "fullName": "Le nom doit faire au moins 2 caractères",
+      "people": "Il ne peut pas y avoir plus de personne que de places",
+      "maxPeople": "Le nombre maximum ne peut pas être inférieur au nombre de personne",
+      "from": "Le point de départ est obligatoire",
+      "to": "Le point d’arrivée obligatoire",
+      "date": "La date est obligatoire"
+    }
+  },
+  "addPeopleModal": {
+    "title": "Ajouter des personnes au bateau",
+    "description": "Ajoutez le nombre de personnes voulu sur ce trajet. Un message sera envoyé à l'auteur du trajet pour accepter votre demande",
+    "numberOfPeopleToAdd": "Nombre de personnes à ajouter",
+    "errors": {
+      "people": "Le nombre de personne ne peut pas être supérieur à la capacité du bateau"
+    }
+  },
+  "editModal": {
+    "title": "Modifier le trajet"
+  }
+}

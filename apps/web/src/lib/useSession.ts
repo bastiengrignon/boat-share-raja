@@ -1,17 +1,20 @@
-import { authClient, type Session, type User } from './auth-client';
+import type { User } from '@boat-share-raja/shared-types';
 
-type SessionHookProp = {
+import { authClient, type Session } from './auth-client';
+
+interface AuthSessionHook {
+  session: Session | undefined;
+  user: User | undefined;
   isPending: boolean;
-  session: Session | null;
-  user: User | null;
   error: Error | null;
-};
+}
 
-export const useSession = (): SessionHookProp => {
-  const { data: session, isPending, error } = authClient.useSession();
+export const useAuthSession = (): AuthSessionHook => {
+  const { data, isPending, error } = authClient.useSession();
+
   return {
-    session: session?.session || null,
-    user: session?.user || null,
+    session: data?.session,
+    user: data?.user,
     isPending,
     error,
   };

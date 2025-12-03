@@ -13,7 +13,8 @@
     "allowJs": true,
     "lib": ["esnext"]
   },
-  "include": ["src/**/*"],
+  "files": ["src/boat-share.d.ts"],
+  "include": ["src/**/*", "src/boat-share.d.ts"],
   "exclude": ["node_modules"],
   "ts-node-dev": {
     "files": true

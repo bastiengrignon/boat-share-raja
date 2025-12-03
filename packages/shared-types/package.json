@@ -1,0 +1,30 @@
+{
+  "name": "@boat-share-raja/shared-types",
+  "version": "1.0.0",
+  "description": "Shared types for boat share",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com//bastiengrignon/boat-share-raja.git"
+  },
+  "private": true,
+  "devDependencies": {
+    "@boat-share-raja/typescript-config": "*",
+    "typescript": "latest"
+  },
+  "volta": {
+    "node": "22.18.0",
+    "yarn": "1.22.22"
+  }
+}

@@ -1,5 +1,7 @@
 import type { FastifyInstance, RouteOptions } from 'fastify';
 
+import { API_ROUTES } from '../constants';
+
 const COLORS = {
   yellow: 33,
   green: 32,
@@ -32,7 +34,9 @@ const displayRoutes = (routes: RouteOptions[]) => {
     .toSorted((a, b) => a.url.localeCompare(b.url))
     .forEach(({ method, url }) => {
       if (method !== 'HEAD') {
-        console.info(`${colorMethod(method as keyof typeof colorMethods)}\t${url}`);
+        console.info(
+          `${colorMethod(method as keyof typeof colorMethods)}\t${url.replace(API_ROUTES.defaultApiPath, '')}`
+        );
       }
     });
 };

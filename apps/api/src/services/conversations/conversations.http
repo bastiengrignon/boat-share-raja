@@ -1,0 +1,31 @@
+### GET conversations by userId
+GET http://localhost:4000/api/conversations/b07e2e98-4a0f-4a7e-b376-8f72c87d3a4b
+
+### GET mesages from conversation
+GET http://localhost:4000/api/conversations/98b1ea20-bb91-48c2-8347-3fe67cfc12eb/messages
+
+### POST create a new conversation
+POST http://localhost:4000/api/conversations
+Content-Type: application/json
+
+{
+  "participantIds": ["b07e2e98-4a0f-4a7e-b376-8f72c87d3a4b", "a9d3c48f-1fdb-466e-b9c3-3f62dccb4856"]
+}
+
+### POST Send message to conversation
+POST http://localhost:4000/api/conversations/98b1ea20-bb91-48c2-8347-3fe67cfc12eb/messages
+Content-Type: application/json
+
+{
+  "senderId": "a9d3c48f-1fdb-466e-b9c3-3f62dccb4856",
+  "content": "Now multiline is working\nYou see? It works!!!"
+}
+
+### POST Send message to conversation to create a new one
+#POST http://localhost:4000/api/conversations/98b1ea20-bb91-48c2-8347-3fe67cfc12ed/messages
+#Content-Type: application/json
+
+#{
+#  "senderId": "a9d3c48f-1fdb-466e-b9c3-3f62dccb4856",
+#  "content": "Message to create new conversation"
+#}

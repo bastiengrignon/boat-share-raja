@@ -1,8 +1,11 @@
+import dayjs from 'dayjs';
 import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
-const NAMESPACES = ['common', 'auth'];
+import 'dayjs/locale/fr';
+
+const NAMESPACES = ['common', 'home', 'journeys', 'messages'];
 export const SUPPORTED_LANGUAGES = ['fr', 'en'];
 
 type Namespace = (typeof NAMESPACES)[number];
@@ -28,9 +31,16 @@ i18n
     fallbackLng: 'fr',
     ns: NAMESPACES,
     defaultNS: 'common',
+    supportedLngs: SUPPORTED_LANGUAGES,
     interpolation: {
       escapeValue: false,
     },
   });
+
+dayjs.locale(i18n.resolvedLanguage);
+
+i18n.on('languageChanged', (lng) => {
+  dayjs.locale(lng);
+});
 
 export default i18n;

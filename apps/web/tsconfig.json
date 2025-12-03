@@ -1,5 +1,5 @@
 {
-  "extends": "@turborepo-starter/typescript-config/react.json",
+  "extends": "@boat-share-raja/typescript-config/react.json",
   "include": ["**/*.ts", "**/*.tsx", "src/vite-env.d.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {

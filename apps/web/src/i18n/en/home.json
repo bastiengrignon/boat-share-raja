@@ -1,0 +1,50 @@
+{
+  "addJourney": "Add a journey",
+  "journeysListTitle": "Upcoming journeys",
+  "noJourney": "No upcoming journey",
+  "journeyCard": {
+    "peopleOnboard": "{{current}} / {{maximum}} max",
+    "publishedBy": "Published by {{name}}",
+    "sendMessage": "Send message",
+    "sendMessageDisabledForMe": "You cannot send message to yourself",
+    "shareBoat": "Share boat",
+    "shareBoatDisabledAlreadySent": "You already asked to share the boat",
+    "noPrice": "No price set"
+  },
+  "addJourneyForm": {
+    "name": "Firstname / nickname",
+    "namePlaceholder": "Enter your name or nickname",
+    "numberOfPeople": "Number of people onboard",
+    "maxNumberOfPeople": "Max number of people onboard",
+    "departure": "Departure point",
+    "departurePlaceholder": "Select a departure point",
+    "arrival": "Arrival point",
+    "arrivalPlaceholder": "Select an arrival point",
+    "date": "Date",
+    "time": "Departure time",
+    "price": "Price",
+    "pricePlaceholder": "Enter price if known",
+    "notes": "Notes",
+    "notesPlaceholder": "Enter any extra details",
+    "errors": {
+      "fullName": "Name must be at least 2 characters long",
+      "people": "Cannot have more people than capacity of the boat",
+      "maxPeople": "Maximum number of people cannot be less than number of people onboard",
+      "from": "Departure point is mandatory",
+      "to": "Arrival point is mandatory",
+      "date": "Date is mandatory"
+    }
+
+  },
+  "addPeopleModal": {
+    "title": "Add people to boat",
+    "description": "Add desired number of people on the journey. A message will be send to the author to accept your request",
+    "numberOfPeopleToAdd": "Number of people to add",
+    "errors": {
+      "people": "Number of people cannot exceed boat capacity"
+    }
+  },
+  "editModal": {
+    "title": "Edit journey"
+  }
+}
