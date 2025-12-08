@@ -1,8 +1,8 @@
-import type { ApiResult } from '@boat-share-raja/shared-types';
+import type { ApiResult, QueryConversationId } from '@boat-share-raja/shared-types';
 import type { FastifyRequest } from 'fastify';
 
 export const getConversationMessages = async (
-  req: FastifyRequest<{ Params: { conversationId: string }; Querystring: { cursor?: string; take?: string } }>
+  req: FastifyRequest<{ Params: QueryConversationId; Querystring: { cursor?: string; take?: string } }>
 ): Promise<ApiResult<object>> => {
   const { conversationId } = req.params;
   const take = req.query.take ? Number(req.query.take) : 20;

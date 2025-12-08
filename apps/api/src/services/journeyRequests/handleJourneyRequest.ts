@@ -36,10 +36,7 @@ export const handleJourneyRequest = async (
   await req.prisma.journeyRequest.update({
     where: { id: journeyRequest.id },
     data: {
-      accepted,
-      acceptedAt: accepted ? new Date() : null,
-      declined: !accepted,
-      declinedAt: accepted ? null : new Date(),
+      status: accepted ? 'ACCEPTED' : 'DECLINED',
     },
   });
 
@@ -80,6 +77,7 @@ export const handleJourneyRequest = async (
     content: accepted
       ? AUTOMATED_MESSAGES.REQUEST_PEOPLE_JOURNEY_ACCEPTED.fr
       : AUTOMATED_MESSAGES.REQUEST_PEOPLE_JOURNEY_DECLINED.fr,
+    type: 'TEXT',
   });
 
   if (accepted) {

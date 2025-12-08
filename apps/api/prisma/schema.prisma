@@ -7,67 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/**
- * model User {
- * id            String    @id @default(uuid())
- * name          String
- * email         String
- * emailVerified Boolean
- * image         String?
- * createdAt     DateTime  @default(now())
- * updatedAt     DateTime  @updatedAt
- * firstName     String?
- * lastName      String?
- * sessions      Session[]
- * accounts      Account[]
- * @@unique([email])
- * @@map("user")
- * }
- */
-/**
- * model Session {
- * id        String   @id
- * expiresAt DateTime
- * token     String
- * createdAt DateTime @default(now())
- * updatedAt DateTime @updatedAt
- * ipAddress String?
- * userAgent String?
- * userId    String
- * user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- * @@unique([token])
- * @@map("session")
- * }
- */
-/**
- * model Account {
- * id                    String    @id
- * accountId             String
- * providerId            String
- * userId                String
- * user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
- * accessToken           String?
- * refreshToken          String?
- * idToken               String?
- * accessTokenExpiresAt  DateTime?
- * refreshTokenExpiresAt DateTime?
- * scope                 String?
- * password              String?
- * createdAt             DateTime  @default(now())
- * updatedAt             DateTime  @updatedAt
- * @@map("account")
- * }
- * model Verification {
- * id         String    @id
- * identifier String
- * value      String
- * expiresAt  DateTime
- * createdAt  DateTime? @default(now())
- * updatedAt  DateTime? @updatedAt
- * @@map("verification")
- * }
- */
-
 model Journey {
   id                String           @id @default(uuid())
   userId            String
@@ -88,21 +27,24 @@ model Journey {
 }
 
 model JourneyRequest {
-  id          String    @id @default(uuid())
+  id          String               @id @default(uuid())
   requesterId String
-  requester   User      @relation(fields: [requesterId], references: [id], onDelete: Cascade)
+  requester   User                 @relation(fields: [requesterId], references: [id], onDelete: Cascade)
   journeyId   String
-  journey     Journey   @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  journey     Journey              @relation(fields: [journeyId], references: [id], onDelete: Cascade)
   people      Int
-  accepted    Boolean   @default(false)
-  acceptedAt  DateTime?
-  declined    Boolean   @default(false)
-  declinedAt  DateTime?
+  status      JourneyRequestStatus @default(PENDING)
 
   createdAt DateTime? @default(now())
   updatedAt DateTime  @updatedAt
 
   @@map("journey_request")
+}
+
+enum JourneyRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
 }
 
 model User {
@@ -178,13 +120,14 @@ model ConversationParticipant {
 }
 
 model Message {
-  id             String   @id @default(uuid())
+  id             String      @id @default(uuid())
   conversationId String
   senderId       String
   content        String
-  extra          Json     @default("{}")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  extra          Json        @default("{}")
+  type           MessageType @default(TEXT)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   // deletedAt      DateTime?
 
   conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
@@ -208,4 +151,9 @@ model MessageRead {
   @@unique([messageId, userId])
   @@index([userId])
   @@map("message_read")
+}
+
+enum MessageType {
+  TEXT
+  JOURNEY_REQUEST
 }

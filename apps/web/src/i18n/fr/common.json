@@ -7,6 +7,7 @@
   "cancel": "Annuler",
   "delete": "Supprimer",
   "search": "Rechercher",
+  "send": "Envoyer",
   "languages": {
     "en": "Anglais",
     "fr": "Français"
@@ -18,6 +19,17 @@
       "settings": "Paramètres",
       "lightMode": "Clair",
       "darkMode": "Sombre"
+    }
+  },
+  "footer": {
+    "description": "Site web par Bastien Grignon",
+    "contactUs": "Contactez-nous",
+    "contactForm": {
+      "title": "Formulaire de contact",
+      "name": "Nom",
+      "email": "Adresse email",
+      "subject": "Sujet",
+      "message": "Message"
     }
   },
   "combobox": {

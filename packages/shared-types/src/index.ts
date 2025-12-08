@@ -44,8 +44,9 @@ export type JourneyRequest = {
   journeyId: string;
   people: number;
   requesterId: string;
-  accepted: boolean;
-  declined: boolean;
+  status: JourneyRequestStatus;
+  createdAt: string;
+  journey: Journey;
 };
 
 export type CreateJourney = Pick<
@@ -98,22 +99,39 @@ export type Message = {
   senderId: string;
   sender?: User;
   content: string;
-  extra?: MessageExtraJourneyRequest;
+  type: MessageType;
+  extra?: MessageExtraType;
   updatedAt: string;
 };
 
 export type SendMessage = QueryConversationId & {
   senderId: string;
   content: string;
-  extra?: MessageExtraJourneyRequest;
+  type?: MessageType;
+  extra?: MessageExtraType;
 };
 
-export type MessageExtraJourneyRequest = unknown & {
-  type: string;
-  id: string;
+export type MessageExtraType = unknown & MessageExtraTypeJourneyRequest;
+
+export type MessageExtraTypeJourneyRequest = {
+  journeyRequestId: string;
+  journeyId: string;
+  people: number;
 };
 
 export type JourneyRequestAcceptation = {
   accepted: boolean;
   requestId: string;
+};
+
+export type MessageType = 'TEXT' | 'JOURNEY_REQUEST';
+
+export type JourneyRequestStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED';
+
+export type ContactFormMessage = {
+  name: string;
+  email: string;
+  subject?: string;
+  message: string;
+  userId?: string;
 };

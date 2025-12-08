@@ -5,8 +5,16 @@
   "lastMessageUserMe": "Me",
   "messagePlaceholder": "Write a message...",
   "request": {
-    "yourRequest": "You have made a request to share a boat. You will receive a message when your request is accepted or declined.",
+    "yourRequestTitle": "Share boat request",
+    "yourRequestPeople_one": "For {{count}} people",
+    "yourRequestPeople_other": "For {{count}} peoples",
+    "date": "The {{date}}",
     "accept": "Accept",
-    "decline": "Decline"
+    "decline": "Decline",
+    "status": {
+      "PENDING": "Pending",
+      "DECLINED": "Declined",
+      "ACCEPTED": "Accepted"
+    }
   }
 }

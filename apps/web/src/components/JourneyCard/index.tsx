@@ -65,10 +65,12 @@ const JourneyCard: FC<JourneyCardProps> = ({ journey, handleShareBoat }) => {
     isBoatFull,
     allIslandsLoading,
     updateJourneyLoading,
+    newConversationLoading,
     handleCloseEditModal,
     handleToggleCard,
     handleEditJourney,
     handleSubmitEditJourney,
+    handleOpenOrCreateConversation,
   } = useJourneyCardHooks({ t, journey });
   return (
     <div>
@@ -141,7 +143,13 @@ const JourneyCard: FC<JourneyCardProps> = ({ journey, handleShareBoat }) => {
               )}
               {user?.id !== journey.user.id && (
                 <Flex align="center" gap="xs" direction={{ base: 'column', sm: 'row' }}>
-                  <Button w="100%" size="xs" rightSection={<TbSend />}>
+                  <Button
+                    w="100%"
+                    size="xs"
+                    rightSection={<TbSend />}
+                    loading={newConversationLoading}
+                    onClick={handleOpenOrCreateConversation}
+                  >
                     {t('journeyCard.sendMessage')}
                   </Button>
                   <Tooltip

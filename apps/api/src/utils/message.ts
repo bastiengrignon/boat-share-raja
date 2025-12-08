@@ -3,7 +3,7 @@ import type { Message, PrismaClient } from '@prisma/client';
 
 export const sendMessageInConversation =
   (prisma: PrismaClient) =>
-  async ({ conversationId, senderId, content, extra }: SendMessage): Promise<Message> =>
+  async ({ conversationId, senderId, content, extra, type }: SendMessage): Promise<Message> =>
     await prisma.$transaction(async (t) => {
       const createdMessage = await t.message.create({
         data: {
@@ -11,6 +11,7 @@ export const sendMessageInConversation =
           senderId,
           content,
           extra: extra ?? undefined,
+          type: type ?? 'TEXT',
         },
         include: {
           sender: true,

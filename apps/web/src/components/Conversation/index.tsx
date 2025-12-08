@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { TbArrowLeft, TbSend, TbSettings } from 'react-icons/tb';
 
 import Loader from '../Loader';
-import Message from '../Message';
+import MessageRendering from '../MessageRendering';
 import { useConversationHooks } from './Conversation.hooks';
 
 const Conversation: FC = () => {
@@ -37,7 +37,7 @@ const Conversation: FC = () => {
         <LoadingOverlay visible={messagesLoading} />
         <Flex direction="column" gap="xs">
           {messages.map((message) => (
-            <Message key={message.id} message={message} />
+            <MessageRendering key={message.id} message={message} />
           ))}
         </Flex>
       </ScrollArea.Autosize>

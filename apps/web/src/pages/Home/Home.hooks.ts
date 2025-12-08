@@ -56,7 +56,8 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
     transformValues: ({ fullName, ...values }) => ({
       ...values,
       user: {
-        id: user?.id,
+        // biome-ignore lint/style/noNonNullAssertion: user is defined
+        id: user?.id!,
         name: fullName,
       },
     }),

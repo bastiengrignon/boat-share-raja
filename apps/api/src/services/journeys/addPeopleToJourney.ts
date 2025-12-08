@@ -52,8 +52,7 @@ export const addPeopleToJourney = async (
       journeyId,
       requesterId: requester.id,
       people,
-      accepted: false,
-      declined: false,
+      status: 'PENDING',
     },
     select: {
       id: true,
@@ -96,7 +95,8 @@ export const addPeopleToJourney = async (
     conversationId: conversation.id,
     senderId: requester.id,
     content: AUTOMATED_MESSAGES.REQUEST_PEOPLE_JOURNEY.fr(people),
-    extra: { type: 'JOURNEY_REQUEST', id: journeyRequest.id },
+    extra: { journeyRequestId: journeyRequest.id, journeyId, people },
+    type: 'JOURNEY_REQUEST',
   });
 
   return {

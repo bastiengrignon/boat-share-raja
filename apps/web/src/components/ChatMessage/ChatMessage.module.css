@@ -1,0 +1,10 @@
+.messageContainer {
+  padding: 0.25rem var(--mantine-spacing-xs) !important;
+  max-width: 70% !important;
+  background-color: var(--mantine-color-gray-3) !important;
+  color: var(--mantine-color-dark-8) !important;
+}
+
+.messageMine {
+  background-color: var(--mantine-color-blue-2) !important;
+}

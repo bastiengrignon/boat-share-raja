@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 
 import { API_ROUTES, HTTP_CODES } from '../constants';
 import { auth } from '../utils/auth';
+import { contactRoutes } from './routes/contact';
 import { conversationsRoutes } from './routes/conversations';
 import { healthcheckRoutes } from './routes/healthcheck';
 import { islandsRoutes } from './routes/islands';
@@ -14,6 +15,7 @@ export const routes = async (app: FastifyInstance) => {
   app.register(journeyRequestRoutes, { prefix: API_ROUTES.journeyRequests });
   app.register(islandsRoutes, { prefix: API_ROUTES.islands });
   app.register(conversationsRoutes, { prefix: API_ROUTES.conversations });
+  app.register(contactRoutes, { prefix: API_ROUTES.contact });
   app.route({
     method: ['GET', 'POST'],
     url: `${API_ROUTES.auth}/*`,

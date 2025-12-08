@@ -6,10 +6,13 @@ import dayjs from 'dayjs';
 import type { TFunction } from 'i18next';
 import type React from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
+import { JOURNEY_REQUEST_STATUS } from '../../constants/string';
+import { replaceRouteParams } from '../../lib/router';
 import { useAuthSession } from '../../lib/useSession';
 import { routes } from '../../router';
+import { conversationService } from '../../services/conversation';
 import { islandService } from '../../services/island';
 import { journeyService } from '../../services/journey';
 
@@ -20,11 +23,13 @@ interface JourneyCardProps {
 
 const journeyQuery = 'journey';
 const islandQuery = 'island';
+const conversationQuery = 'conversation';
 
 export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
   const { pathname } = useLocation();
   const { user } = useAuthSession();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [openedCardById, setOpenedCardById] = useState<KeyBoolean>({});
   const [journeyEditModalObject, setJourneyEditModalObject] = useState<Journey | null>(null);
@@ -67,6 +72,13 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     queryFn: islandService.getAll,
   });
 
+  const { mutate: newConversationMutation, isPending: newConversationLoading } = useMutation({
+    mutationKey: [conversationQuery, 'new'],
+    mutationFn: conversationService.checkOrCreateConversation,
+    onSuccess: ({ data: conversationId }) =>
+      navigate(replaceRouteParams(routes.messages.conversation, { conversationId })),
+  });
+
   const { mutate: updateJourneyMutation, isPending: updateJourneyLoading } = useMutation({
     mutationKey: [journeyQuery],
     mutationFn: journeyService.updateJourney,
@@ -87,7 +99,9 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     () =>
       journey.journeyRequest.some(
         (request) =>
-          request.journeyId === journey.id && request.requesterId === user?.id && !request.accepted && !request.declined
+          request.journeyId === journey.id &&
+          request.requesterId === user?.id &&
+          request.status !== JOURNEY_REQUEST_STATUS.PENDING
       ) || false,
     [user?.id, journey.id, journey.journeyRequest]
   );
@@ -123,6 +137,12 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     [updateJourneyMutation, journeyEditModalObject?.id]
   );
 
+  const handleOpenOrCreateConversation = useCallback(() => {
+    if (user?.id && journey.user.id) {
+      newConversationMutation({ userIdA: user.id, userIdB: journey.user.id });
+    }
+  }, [journey.user.id, newConversationMutation, user?.id]);
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: no Mantine form
   useEffect(() => {
     if (journeyEditModalObject) {
@@ -153,9 +173,11 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     isBoatFull,
     allIslandsLoading,
     updateJourneyLoading,
+    newConversationLoading,
     handleCloseEditModal,
     handleToggleCard,
     handleEditJourney,
     handleSubmitEditJourney,
+    handleOpenOrCreateConversation,
   };
 };

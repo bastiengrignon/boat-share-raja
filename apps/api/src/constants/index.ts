@@ -6,6 +6,7 @@ type ApiRoutes = {
   journeyRequests: string;
   islands: string;
   conversations: string;
+  contact: string;
 };
 
 export const HTTP_CODES = {
@@ -32,6 +33,7 @@ export const API_ROUTES: ApiRoutes = {
   journeyRequests: '/journey-requests',
   islands: '/islands',
   conversations: '/conversations',
+  contact: '/contact',
 };
 
 export const AUTOMATED_MESSAGES = {
@@ -48,3 +50,5 @@ export const AUTOMATED_MESSAGES = {
     en: 'Your request has been declined.',
   },
 };
+
+export const SUPPORT_EMAIL = 'basgrignon@gmail.com';

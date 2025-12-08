@@ -6,6 +6,7 @@ import type React from 'react';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
+import { MESSAGE_TYPES } from '../../constants/string';
 import { sortByUpdatedAt } from '../../lib/functional';
 import { useAuthSession } from '../../lib/useSession';
 import { routes } from '../../router';
@@ -37,6 +38,7 @@ export const useConversationHooks = ({ t }: ConversationInputHooks) => {
       // biome-ignore lint/style/noNonNullAssertion: user is always defined
       senderId: user?.id!,
       conversationId: conversationId as string,
+      type: MESSAGE_TYPES.TEXT,
     }),
   });
 
@@ -98,7 +100,8 @@ export const useConversationHooks = ({ t }: ConversationInputHooks) => {
     (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) {
         event.preventDefault();
-        sendMessageForm.onSubmit(handleSubmitMessage)();
+        // TODO: fix send not working
+        // sendMessageForm.onSubmit(handleSubmitMessage)();
       }
     },
     [handleSubmitMessage]

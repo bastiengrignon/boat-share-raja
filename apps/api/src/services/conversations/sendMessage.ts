@@ -7,7 +7,7 @@ import { sendMessageInConversation } from '../../utils/message';
 const sendMessageBodySchema = z.object({
   senderId: z.uuid(),
   content: z.string().min(1),
-  extra: z.object({ type: z.string(), id: z.string() }).optional(),
+  extra: z.object({ journeyRequestId: z.string(), journeyId: z.string(), people: z.number() }).optional(),
   participantIds: z.array(z.uuid()).min(2).optional(),
 });
 

@@ -1,6 +1,7 @@
 import { Anchor, Flex, Group, Title } from '@mantine/core';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TbSpeedboat } from 'react-icons/tb';
 import { Link } from 'react-router';
 
 import LanguageSwitcher from '../components/LanguageSwitcher';
@@ -15,7 +16,12 @@ const Header: FC = () => {
   return (
     <Flex align="center" justify="space-between" px="md" py="xs" h="100%">
       <Anchor component={Link} to={routes.home} underline="never" c="inherit">
-        <Title order={isMobile ? 4 : 3}>{t('appName')}</Title>
+        <Group gap="xs">
+          <TbSpeedboat size={26} />
+          <Title order={isMobile ? 4 : 3} lineClamp={1} maw="60dvw">
+            {t('appName')}
+          </Title>
+        </Group>
       </Anchor>
       <Group gap="xs">
         <LanguageSwitcher />
