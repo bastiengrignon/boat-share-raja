@@ -17,4 +17,6 @@ export const conversationService = {
     (await boatSharingApi.post(`${conversationRoute}/${conversationId}/read`, { userId })).data,
   checkOrCreateConversation: async ({ userIdA, userIdB }: { userIdA: string; userIdB: string }) =>
     (await boatSharingApi.put(conversationRoute, { userIdA, userIdB })).data,
+  checkUnreadMessages: async ({ userId }: QueryUserId) =>
+    (await boatSharingApi.get(`${conversationRoute}/${userId}/unread`)).data,
 };

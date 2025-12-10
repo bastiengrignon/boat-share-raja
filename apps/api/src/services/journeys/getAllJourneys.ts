@@ -1,11 +1,20 @@
 import type { ApiResult } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
+import dayjs from 'dayjs';
 import type { FastifyRequest } from 'fastify';
 
 export const getAllJourneys = async (
   req: FastifyRequest
 ): Promise<ApiResult<{ journeys: Omit<Journey, 'updatedAt'>[] }>> => {
   const journeys = await req.prisma.journey.findMany({
+    /*
+TODO: remove for test purpose only
+    where: {
+      date: {
+        lte: dayjs().startOf('day').toDate(),
+      },
+    },
+*/
     include: {
       user: true,
       JourneyRequest: true,

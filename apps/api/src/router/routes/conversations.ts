@@ -4,6 +4,7 @@ import { checkOrCreateConversation } from '../../services/conversations/checkOrC
 import { createConversation } from '../../services/conversations/createConversation';
 import { getConversation } from '../../services/conversations/getConversation';
 import { getConversationMessages } from '../../services/conversations/getConversationMessages';
+import { getUnreadMessages } from '../../services/conversations/getUnreadMessages';
 import { getUserConversations } from '../../services/conversations/getUserConversations';
 import { markConversationAsRead } from '../../services/conversations/markConversationAsRead';
 import { sendMessage } from '../../services/conversations/sendMessage';
@@ -16,4 +17,5 @@ export const conversationsRoutes = (app: FastifyInstance) => {
   app.get('/:conversationId/messages', getConversationMessages);
   app.post('/:conversationId/messages', sendMessage);
   app.post('/:conversationId/read', markConversationAsRead);
+  app.get('/:userId/unread', getUnreadMessages);
 };

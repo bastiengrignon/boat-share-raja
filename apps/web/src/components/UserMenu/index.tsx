@@ -1,4 +1,4 @@
-import { Avatar, Menu, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
+import { Avatar, Indicator, Menu, useComputedColorScheme, useMantineColorScheme } from '@mantine/core';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TbMessages, TbMoon, TbRoute, TbSettings, TbSun } from 'react-icons/tb';
@@ -13,19 +13,26 @@ const UserMenu: FC = () => {
   const isMobile = useMobileQuery();
   const { setColorScheme } = useMantineColorScheme();
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
-  const { user } = useUserMenuHooks();
+  const { user, isNewMessages } = useUserMenuHooks();
 
   return (
     <Menu withArrow position="bottom-end">
       <Menu.Target>
-        <Avatar style={{ cursor: 'pointer' }} variant="light" color="blue" size={isMobile ? 28 : 34} radius="sm" />
+        <Indicator color="red" disabled={!isNewMessages}>
+          <Avatar style={{ cursor: 'pointer' }} variant="light" color="blue" size={isMobile ? 28 : 34} radius="sm" />
+        </Indicator>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>{user?.name}</Menu.Label>
         <Menu.Item leftSection={<TbRoute />} component={Link} to={routes.journeys}>
           {t('header.menu.myJourneys')}
         </Menu.Item>
-        <Menu.Item leftSection={<TbMessages />} component={Link} to={routes.messages.home}>
+        <Menu.Item
+          leftSection={<TbMessages />}
+          rightSection={<Indicator color="red" size={6} disabled={!isNewMessages} />}
+          component={Link}
+          to={routes.messages.home}
+        >
           {t('header.menu.myMessages')}
         </Menu.Item>
         <Menu.Item leftSection={<TbSettings />} component={Link} to={routes.settings}>
