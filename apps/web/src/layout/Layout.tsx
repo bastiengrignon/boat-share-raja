@@ -11,7 +11,7 @@ const Layout: FC = () => {
   const { isInsideConversation, isSettingsRoute, footerRef } = useLayoutHooks();
   return (
     <AppShell
-      footer={{ height: 40, collapsed: !isSettingsRoute }}
+      footer={{ height: 60, collapsed: !isSettingsRoute }}
       header={{ height: 60, collapsed: isInsideConversation }}
       padding="sm"
       className={classes.appShellContainer}

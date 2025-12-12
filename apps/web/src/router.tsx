@@ -8,6 +8,8 @@ const Settings = lazy(() => import('./pages/Settings'));
 const Layout = lazy(() => import('./layout/Layout'));
 const MyMessages = lazy(() => import('./pages/MyMessages'));
 const MyJourneys = lazy(() => import('./pages/MyJourneys'));
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const LegalNotice = lazy(() => import('./pages/LegalNotice'));
 
 interface Routes {
   home: string;
@@ -17,6 +19,8 @@ interface Routes {
     conversation: string;
   };
   settings: string;
+  legalNotice: string;
+  privacyPolicy: string;
 }
 
 export const routes: Routes = {
@@ -27,6 +31,8 @@ export const routes: Routes = {
     conversation: '/messages/:conversationId',
   },
   settings: '/settings',
+  legalNotice: '/legal-notice',
+  privacyPolicy: '/privacy-policy',
 };
 
 export const router = createBrowserRouter([
@@ -54,6 +60,14 @@ export const router = createBrowserRouter([
       {
         path: routes.settings,
         Component: Settings,
+      },
+      {
+        path: routes.legalNotice,
+        Component: LegalNotice,
+      },
+      {
+        path: routes.privacyPolicy,
+        Component: PrivacyPolicy,
       },
     ],
   },

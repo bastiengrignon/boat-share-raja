@@ -30,7 +30,11 @@
       "email": "Email address",
       "subject": "Subject",
       "message": "Message"
-    }
+    },
+    "privacyPolicy": "Privacy policy",
+    "legalNotice": "Legal notice",
+    "legalNoticePerson": "The website is edited by: \n<strong>Name and firstname:</strong> {{fullName}}\n<strong>Address: </strong> {{address}}\n<strong>Email:</strong> {{email}}",
+    "legalNoticeHost": "The website is hosted by:\nRailway Corp.\n<strong>Site web:</strong> https://railway.com\n<strong>Conditions d’utilisation de l’hébergeur:</strong> https://railway.com/legal/terms\n<strong>Politique de confidentialité de l’hébergeur:</strong> https://railway.com/legal/privacy\n"
   },
   "combobox": {
     "createNewElement": "+ Create \"<i>{{element}}</i>\""
