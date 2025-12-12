@@ -1,7 +1,6 @@
-import { Anchor, Flex, Group, Title } from '@mantine/core';
+import { Anchor, Flex, Group, Image, Title } from '@mantine/core';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TbSpeedboat } from 'react-icons/tb';
 import { Link } from 'react-router';
 
 import LanguageSwitcher from '../components/LanguageSwitcher';
@@ -17,7 +16,7 @@ const Header: FC = () => {
     <Flex align="center" justify="space-between" px="md" py="xs" h="100%">
       <Anchor component={Link} to={routes.home} underline="never" c="inherit">
         <Group gap="xs">
-          <TbSpeedboat size={26} />
+          <Image src="/icons/pwa-512x512.png" w={28} h="auto" />
           <Title order={isMobile ? 4 : 3} lineClamp={1} maw="60dvw">
             {t('appName')}
           </Title>
