@@ -24,7 +24,12 @@ const Footer: FC = () => {
       <Modal opened={openedContactModal} onClose={closeContactModal} title={t('footer.contactForm.title')}>
         <form onSubmit={contactUsForm.onSubmit(handleSubmitContact)}>
           <Stack>
-            <TextInput required label={t('footer.contactForm.name')} {...contactUsForm.getInputProps('name')} />
+            <TextInput
+              data-autofocus
+              required
+              label={t('footer.contactForm.name')}
+              {...contactUsForm.getInputProps('name')}
+            />
             <TextInput required label={t('footer.contactForm.email')} {...contactUsForm.getInputProps('email')} />
             <TextInput label={t('footer.contactForm.subject')} {...contactUsForm.getInputProps('subject')} />
             <Textarea

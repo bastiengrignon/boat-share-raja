@@ -1,0 +1,36 @@
+<mjml>
+  <mj-body background-color="#f5f5f5">
+
+    <mj-section background-color="#ffffff" padding="20px">
+      <mj-column>
+        <mj-text font-size="20px" font-weight="bold">
+          New Support Request
+        </mj-text>
+
+        <mj-text color="#555">
+          You received a new support message:
+        </mj-text>
+
+        <mj-text>
+          <strong>Name:</strong> {{name}} <br/>
+        </mj-text>
+
+        <mj-divider border-width="1px" border-color="#dddddd" />
+
+        <mj-text font-size="16px" line-height="1.5">
+          <strong>Message:</strong><br/><br/>
+          {{message}}
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section>
+      <mj-column>
+        <mj-text font-size="12px" color="#888">
+          Sent automatically by the {{APP_NAME}} Support System
+        </mj-text>
+      </mj-column>
+    </mj-section>
+
+  </mj-body>
+</mjml>

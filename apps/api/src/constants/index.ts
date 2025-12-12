@@ -51,4 +51,4 @@ export const AUTOMATED_MESSAGES = {
   },
 };
 
-export const SUPPORT_EMAIL = 'basgrignon@gmail.com';
+export const SUPPORT_EMAIL = 'support@bastiengrignon.fr';
