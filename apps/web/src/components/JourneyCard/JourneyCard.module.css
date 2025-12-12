@@ -1,3 +1,7 @@
 .journeyCardContainer {
   cursor: pointer;
 }
+
+.journeyCardMine {
+  border: 1px solid var(--mantine-color-cyan-7);
+}

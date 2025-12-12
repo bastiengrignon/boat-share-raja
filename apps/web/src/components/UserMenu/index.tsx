@@ -19,7 +19,7 @@ const UserMenu: FC = () => {
     <Menu withArrow position="bottom-end">
       <Menu.Target>
         <Indicator color="red" disabled={!isNewMessages}>
-          <Avatar style={{ cursor: 'pointer' }} variant="light" color="blue" size={isMobile ? 28 : 34} radius="sm" />
+          <Avatar style={{ cursor: 'pointer' }} variant="light" color="cyan" size={isMobile ? 28 : 34} radius="sm" />
         </Indicator>
       </Menu.Target>
       <Menu.Dropdown>

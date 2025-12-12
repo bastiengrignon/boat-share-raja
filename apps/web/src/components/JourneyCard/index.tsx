@@ -19,6 +19,7 @@ import {
   Transition,
 } from '@mantine/core';
 import { DatePickerInput, TimePicker } from '@mantine/dates';
+import { clsx } from 'clsx';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import type { FC } from 'react';
@@ -75,7 +76,11 @@ const JourneyCard: FC<JourneyCardProps> = ({ journey, handleShareBoat }) => {
   return (
     <div>
       <Box w="100%" className={classes.journeyCardContainer} onClick={() => handleToggleCard(journey.id)}>
-        <Paper withBorder p="xs" bd={user?.id === journey.user?.id ? '1px solid blue' : ''}>
+        <Paper
+          withBorder
+          p="xs"
+          className={clsx({ [classes.journeyCardMine as string]: user?.id === journey.user.id })}
+        >
           <Stack>
             <Flex align="center" justify="space-between">
               <Group>
