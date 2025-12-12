@@ -156,4 +156,5 @@ model MessageRead {
 enum MessageType {
   TEXT
   JOURNEY_REQUEST
+  SYSTEM
 }

@@ -8,6 +8,7 @@
     "yourRequestTitle": "Share boat request",
     "yourRequestPeople_one": "For {{count}} people",
     "yourRequestPeople_other": "For {{count}} peoples",
+    "deletedJourney": "The journey has been cancelled",
     "date": "The {{date}}",
     "accept": "Accept",
     "decline": "Decline",

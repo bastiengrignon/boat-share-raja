@@ -41,6 +41,7 @@ import {
 } from 'react-icons/tb';
 
 import { DATE_FORMAT, DATE_READABLE_SHORT_FORMAT } from '../../constants/string';
+import ConfirmDeletePopover from '../ConfirmDeletePopover';
 import Loader from '../Loader';
 import { useJourneyCardHooks } from './JourneyCard.hooks';
 import classes from './JourneyCard.module.css';
@@ -66,10 +67,12 @@ const JourneyCard: FC<JourneyCardProps> = ({ journey, handleShareBoat }) => {
     isBoatFull,
     allIslandsLoading,
     updateJourneyLoading,
+    deleteJourneyLoading,
     newConversationLoading,
     handleCloseEditModal,
     handleToggleCard,
     handleEditJourney,
+    handleDeleteJourney,
     handleSubmitEditJourney,
     handleOpenOrCreateConversation,
   } = useJourneyCardHooks({ t, journey });
@@ -103,7 +106,13 @@ const JourneyCard: FC<JourneyCardProps> = ({ journey, handleShareBoat }) => {
                   })}
                 </Text>
               </Group>
-              <Group>
+              <Group gap="xs">
+                {isMyJourneysPath && (
+                  <ConfirmDeletePopover
+                    acceptProps={{ loading: deleteJourneyLoading }}
+                    onSubmit={() => handleDeleteJourney(journey.id)}
+                  />
+                )}
                 {isMyJourneysPath && (
                   <ActionIcon size="sm" variant="outline" onClick={(event) => handleEditJourney(event, journey)}>
                     <TbEdit size={14} />

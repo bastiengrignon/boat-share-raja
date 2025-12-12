@@ -6,8 +6,11 @@
   "error": "Error",
   "cancel": "Cancel",
   "delete": "Delete",
+  "confirmDelete": "Do you really want to delete ?",
   "search": "Search",
   "send": "Send",
+  "yes": "Yes",
+  "no": "No",
   "languages": {
     "en": "English",
     "fr": "French"

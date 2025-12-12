@@ -88,6 +88,12 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     },
   });
 
+  const { mutate: deleteJourneyMutation, isPending: deleteJourneyLoading } = useMutation({
+    mutationKey: [journeyQuery],
+    mutationFn: journeyService.deleteJourney,
+    onSuccess: async () => await queryClient.invalidateQueries({ queryKey: [journeyQuery] }),
+  });
+
   const isMyJourneysPath = useMemo(() => pathname === routes.journeys, [pathname]);
 
   const formattedIslands = useMemo(
@@ -120,6 +126,11 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
       openEditJourneyModal();
     },
     [openEditJourneyModal]
+  );
+
+  const handleDeleteJourney = useCallback(
+    (journeyId: string) => deleteJourneyMutation({ journeyId }),
+    [deleteJourneyMutation]
   );
 
   const handleCloseEditModal = useCallback(() => {
@@ -173,10 +184,12 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     isBoatFull,
     allIslandsLoading,
     updateJourneyLoading,
+    deleteJourneyLoading,
     newConversationLoading,
     handleCloseEditModal,
     handleToggleCard,
     handleEditJourney,
+    handleDeleteJourney,
     handleSubmitEditJourney,
     handleOpenOrCreateConversation,
   };

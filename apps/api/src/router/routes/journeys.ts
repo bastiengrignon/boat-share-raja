@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 
 import { addJourney } from '../../services/journeys/addJourney';
 import { addPeopleToJourney } from '../../services/journeys/addPeopleToJourney';
+import { deleteJourney } from '../../services/journeys/deleteJourney';
 import { getAllJourneys } from '../../services/journeys/getAllJourneys';
 import { getMyJourneys } from '../../services/journeys/getMyJourneys';
 import { updateJourney } from '../../services/journeys/updateJourney';
@@ -53,5 +54,6 @@ export const journeyRoutes = (app: FastifyInstance) => {
   app.post('', { schema: addJourneySchema }, addJourney);
   app.post('/:id/people', addPeopleToJourney);
   app.put('/:id', updateJourney);
+  app.delete('/:id', deleteJourney);
   app.get('/user/:userId', getMyJourneys);
 };

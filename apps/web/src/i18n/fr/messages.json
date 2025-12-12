@@ -8,6 +8,7 @@
     "yourRequestTitle": "Demande de partage de bateau",
     "yourRequestPeople_one": "Pour {{count}} personne",
     "yourRequestPeople_other": "Pour {{count}} personnes",
+    "deletedJourney": "Le trajet à été annulé",
     "date": "Le {{date}}",
     "accept": "Accepter",
     "decline": "Refuser",

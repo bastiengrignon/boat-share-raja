@@ -7,6 +7,7 @@ export const DATE_FORMAT = 'DD/MM/YY';
 export const MESSAGE_TYPES = {
   TEXT: 'TEXT',
   JOURNEY_REQUEST: 'JOURNEY_REQUEST',
+  SYSTEM: 'SYSTEM',
 } as const satisfies { [K in MessageType]: K };
 
 export const JOURNEY_REQUEST_STATUS = {

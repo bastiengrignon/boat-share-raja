@@ -29,33 +29,39 @@ const RequestChatMessage: FC<RequestChatMessageProps> = ({ message, request, isR
     <Flex justify="center">
       <Paper withBorder shadow="xs" px="xs" py="xs" w="75%">
         <Text fw="bold">{t('request.yourRequestTitle')}</Text>
-        <Flex direction="column">
-          <Group gap="xs">
-            <TbSpeedboat />
-            <Text size="sm">{request?.journey?.from}</Text>
-            <TbArrowRight />
-            <Text size="sm">{request?.journey?.to}</Text>
-          </Group>
-          <Group gap="xs">
-            <TbUsersGroup />
-            <Text size="sm" fs="italic">
-              {t('request.yourRequestPeople', { count: request?.people })}
-            </Text>
-          </Group>
-          <Group gap="xs">
-            <TbCalendar />
-            <Text size="sm" fs="italic">
-              {t('request.date', { date: dayjs(request?.journey?.date).format(DATE_FORMAT) })}
-            </Text>
-          </Group>
-          {(isRequestAuthor || (!isRequestAuthor && request?.status !== JOURNEY_REQUEST_STATUS.PENDING)) && (
-            <Center mt="xs">
-              <Badge variant="light" color={requestStatusColors[request?.status || JOURNEY_REQUEST_STATUS.PENDING]}>
-                {t(`request.status.${request?.status}`)}
-              </Badge>
-            </Center>
-          )}
-        </Flex>
+        {request === null ? (
+          <Text ta="center" c="red">
+            {t('request.deletedJourney')}
+          </Text>
+        ) : (
+          <Flex direction="column">
+            <Group gap="xs">
+              <TbSpeedboat />
+              <Text size="sm">{request?.journey?.from}</Text>
+              <TbArrowRight />
+              <Text size="sm">{request?.journey?.to}</Text>
+            </Group>
+            <Group gap="xs">
+              <TbUsersGroup />
+              <Text size="sm" fs="italic">
+                {t('request.yourRequestPeople', { count: request?.people })}
+              </Text>
+            </Group>
+            <Group gap="xs">
+              <TbCalendar />
+              <Text size="sm" fs="italic">
+                {t('request.date', { date: dayjs(request?.journey?.date).format(DATE_FORMAT) })}
+              </Text>
+            </Group>
+            {(isRequestAuthor || (!isRequestAuthor && request?.status !== JOURNEY_REQUEST_STATUS.PENDING)) && (
+              <Center mt="xs">
+                <Badge variant="light" color={requestStatusColors[request?.status || JOURNEY_REQUEST_STATUS.PENDING]}>
+                  {t(`request.status.${request?.status}`)}
+                </Badge>
+              </Center>
+            )}
+          </Flex>
+        )}
         {!isRequestAuthor && request?.status === JOURNEY_REQUEST_STATUS.PENDING && (
           <Group mt="xs">
             <Flex gap="xs" flex={1}>

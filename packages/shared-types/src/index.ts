@@ -124,7 +124,7 @@ export type JourneyRequestAcceptation = {
   requestId: string;
 };
 
-export type MessageType = 'TEXT' | 'JOURNEY_REQUEST';
+export type MessageType = 'TEXT' | 'JOURNEY_REQUEST' | 'SYSTEM';
 
 export type JourneyRequestStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED';
 

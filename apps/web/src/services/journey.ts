@@ -13,4 +13,6 @@ export const journeyService = {
     (await boatSharingApi.post(`${journeyRoute}/${journeyId}/people`, { people, user })).data,
   updateJourney: async ({ journey }: { journey: EditJourney & { id: string } }) =>
     (await boatSharingApi.put(`${journeyRoute}/${journey.id}`, journey)).data,
+  deleteJourney: async ({ journeyId }: { journeyId: string }) =>
+    (await boatSharingApi.delete(`${journeyRoute}/${journeyId}`)).data,
 };
