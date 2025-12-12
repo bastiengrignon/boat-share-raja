@@ -1,4 +1,5 @@
 import {
+  ActionIcon,
   Autocomplete,
   Box,
   Button,
@@ -13,12 +14,13 @@ import {
   Textarea,
   TextInput,
   Title,
+  Tooltip,
 } from '@mantine/core';
 import { DatePickerInput, TimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TbCalendar, TbClock, TbCurrencyDollar, TbMapPin, TbPlus, TbSearch } from 'react-icons/tb';
+import { TbCalendar, TbClock, TbCurrencyDollar, TbFilter, TbMapPin, TbPlus, TbSearch } from 'react-icons/tb';
 
 import JourneyCard from '../../components/JourneyCard';
 import Loader from '../../components/Loader';
@@ -57,12 +59,19 @@ const Home: FC = () => {
       <Stack gap="xs">
         <Flex align="center" justify="space-between">
           <Title order={4}>{t('journeysListTitle')}</Title>
-          <TextInput
-            placeholder={t('common:search')}
-            value={search}
-            onChange={setSearch}
-            rightSection={search !== '' ? <Input.ClearButton onClick={() => setSearch('')} /> : <TbSearch />}
-          />
+          <Group gap="xs" wrap="nowrap">
+            <TextInput
+              placeholder={t('common:search')}
+              value={search}
+              onChange={setSearch}
+              rightSection={search !== '' ? <Input.ClearButton onClick={() => setSearch('')} /> : <TbSearch />}
+            />
+            <Tooltip withArrow label="Coming soon">
+              <ActionIcon size="lg" disabled>
+                <TbFilter />
+              </ActionIcon>
+            </Tooltip>
+          </Group>
         </Flex>
         <Box mih={250} pos="relative">
           <LoadingOverlay visible={allJourneyLoading} />
