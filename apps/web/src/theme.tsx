@@ -1,4 +1,4 @@
-import { createTheme, Paper } from '@mantine/core';
+import { createTheme, LoadingOverlay, Paper } from '@mantine/core';
 
 export const theme = createTheme({
   cursorType: 'pointer',
@@ -8,6 +8,11 @@ export const theme = createTheme({
     Paper: Paper.extend({
       defaultProps: {
         shadow: 'md',
+      },
+    }),
+    LoadingOverlay: LoadingOverlay.extend({
+      defaultProps: {
+        zIndex: 300,
       },
     }),
   },
