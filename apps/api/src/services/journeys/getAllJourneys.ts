@@ -7,14 +7,11 @@ export const getAllJourneys = async (
   req: FastifyRequest
 ): Promise<ApiResult<{ journeys: Omit<Journey, 'updatedAt'>[] }>> => {
   const journeys = await req.prisma.journey.findMany({
-    /*
-TODO: remove for test purpose only
     where: {
       date: {
         lte: dayjs().startOf('day').toDate(),
       },
     },
-*/
     include: {
       user: true,
       JourneyRequest: true,
