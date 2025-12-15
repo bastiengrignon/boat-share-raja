@@ -1,11 +1,13 @@
+import mdx from '@mdx-js/rollup';
 import react from '@vitejs/plugin-react-swc';
-import { defineConfig } from 'vite';
+import { defineConfig, type PluginOption } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: { host: true },
   plugins: [
+    mdx({ providerImportSource: '@mdx-js/react' }) as unknown as PluginOption,
     react(),
     tsConfigPaths(),
     VitePWA({

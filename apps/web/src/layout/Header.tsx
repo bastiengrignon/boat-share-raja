@@ -16,7 +16,7 @@ const Header: FC = () => {
     <Flex align="center" justify="space-between" px="md" py="xs" h="100%">
       <Anchor component={Link} to={routes.home} underline="never" c="inherit">
         <Group gap="xs">
-          <Image src="/icons/pwa-512x512.png" w={28} h="auto" />
+          <Image src="/icons/pwa-192x192.png" w={28} h="auto" alt="brand logo" />
           <Title order={isMobile ? 4 : 3} lineClamp={1} maw="60dvw">
             {t('appName')}
           </Title>
