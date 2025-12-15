@@ -12,11 +12,21 @@ export const getUserConversations = async (
 
   const archivedIds = archivedConversations.map(({ otherUserId }) => otherUserId);
 
+  const userBlocks = await req.prisma.userBlock.findMany({
+    where: {
+      OR: [{ blockerId: userId }, { blockedId: userId }],
+    },
+    select: { blockerId: true, blockedId: true },
+  });
+
+  const blockedIds = userBlocks.map(({ blockedId, blockerId }) => (blockerId === userId ? blockedId : blockerId));
+  const excludedIds = Array.from(new Set([...archivedIds, ...blockedIds]));
+
   const conversations = await req.prisma.conversation.findMany({
     where: {
       participants: {
         some: { userId },
-        none: { userId: { in: archivedIds } },
+        none: { userId: { in: excludedIds } },
       },
     },
     include: {

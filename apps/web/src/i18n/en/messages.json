@@ -25,6 +25,7 @@
     "reportUserReasonError": "The report reason is required",
     "reportUserSuccess": "Your report has been taken into account",
     "blockUser": "Block user",
+    "blockUserDescription": "Do you really want to block this user?",
     "archiveConversation": "Archive conversation"
   }
 }

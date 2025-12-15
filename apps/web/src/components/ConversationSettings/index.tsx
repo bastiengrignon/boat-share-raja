@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { TbArchive, TbSettings, TbUserCancel, TbUserExclamation } from 'react-icons/tb';
 
 import Loader from '../Loader';
+import BlockUserModal from './BlockUserModal';
 import { useConversationSettingsHooks } from './ConversationSettings.hooks';
 import ReportReasonModal from './ReportReasonModal';
 
@@ -18,9 +19,12 @@ const ConversationSettings: FC<ConversationSettingsProps> = ({ conversation }) =
     reportUserLoading,
     blockUserLoading,
     openedReportReasonModal,
+    openedBlockUserModal,
     archiveConversationLoading,
     openReportReasonModal,
+    openBlockUserModal,
     closeReportReasonModal,
+    closeBlockUserModal,
     handleReportUser,
     handleBlockUser,
     handleArchiveConversation,
@@ -43,7 +47,7 @@ const ConversationSettings: FC<ConversationSettingsProps> = ({ conversation }) =
           >
             {t('settings.reportUser')}
           </Menu.Item>
-          <Menu.Item leftSection={blockUserLoading ? <Loader /> : <TbUserCancel />} onClick={handleBlockUser}>
+          <Menu.Item leftSection={blockUserLoading ? <Loader /> : <TbUserCancel />} onClick={openBlockUserModal}>
             {t('settings.blockUser')}
           </Menu.Item>
           <Menu.Divider />
@@ -62,6 +66,7 @@ const ConversationSettings: FC<ConversationSettingsProps> = ({ conversation }) =
         handleSubmit={handleReportUser}
         loading={reportUserLoading}
       />
+      <BlockUserModal opened={openedBlockUserModal} close={closeBlockUserModal} handleSubmit={handleBlockUser} />
     </>
   );
 };

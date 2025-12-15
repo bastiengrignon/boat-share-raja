@@ -26,6 +26,7 @@ export const useConversationSettingsHooks = ({ conversation, t }: ConversationSe
 
   const [openedReportReasonModal, { open: openReportReasonModal, close: closeReportReasonModal }] =
     useDisclosure(false);
+  const [openedBlockUserModal, { open: openBlockUserModal, close: closeBlockUserModal }] = useDisclosure(false);
 
   const { mutate: archiveConversationMutation, isPending: archiveConversationLoading } = useMutation({
     mutationKey: [conversationQuery, 'archived'],
@@ -83,9 +84,12 @@ export const useConversationSettingsHooks = ({ conversation, t }: ConversationSe
     reportUserLoading,
     blockUserLoading,
     openedReportReasonModal,
+    openedBlockUserModal,
     archiveConversationLoading,
     openReportReasonModal,
+    openBlockUserModal,
     closeReportReasonModal,
+    closeBlockUserModal,
     handleReportUser,
     handleBlockUser,
     handleArchiveConversation,

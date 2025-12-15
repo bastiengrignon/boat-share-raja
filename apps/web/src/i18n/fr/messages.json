@@ -25,6 +25,7 @@
     "reportUserReasonError": "La raison du signalement est obligatoire",
     "reportUserSuccess": "Votre signalement à été pris en compte",
     "blockUser": "Bloquer l'utilisateur",
+    "blockUserDescription": "Êtes-vou sûr de vouloir bloquer cet utilisateur ?",
     "archiveConversation": "Archiver la conversation"
   }
 }
