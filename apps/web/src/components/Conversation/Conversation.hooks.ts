@@ -126,6 +126,7 @@ export const useConversationHooks = ({ t }: ConversationInputHooks) => {
 
   return {
     viewPortRef,
+    conversation,
     formattedTitle,
     messages,
     sendMessageForm,

@@ -13,7 +13,7 @@ const adjectives = ['Brave', 'Calm', 'Swift', 'Bright', 'Lucky', 'Silent', 'Migh
 
 const animals = ['Dolphin', 'Tiger', 'Fox', 'Eagle', 'Panda', 'Wolf', 'Falcon', 'Otter', 'Hawk', 'Lion'];
 
-export const generateName = (): string => {
+const generateName = (): string => {
   const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const animal = animals[Math.floor(Math.random() * animals.length)];
   const number = Math.floor(Math.random() * 9000) + 1000;

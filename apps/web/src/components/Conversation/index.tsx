@@ -1,8 +1,9 @@
 import { ActionIcon, Box, Divider, Flex, Group, LoadingOverlay, ScrollArea, Text, Textarea } from '@mantine/core';
 import type { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TbArrowLeft, TbSend, TbSettings } from 'react-icons/tb';
+import { TbArrowLeft, TbSend } from 'react-icons/tb';
 
+import ConversationSettings from '../ConversationSettings';
 import Loader from '../Loader';
 import MessageRendering from '../MessageRendering';
 import { useConversationHooks } from './Conversation.hooks';
@@ -11,6 +12,7 @@ const Conversation: FC = () => {
   const { t } = useTranslation('messages');
   const {
     viewPortRef,
+    conversation,
     formattedTitle,
     messages,
     sendMessageForm,
@@ -28,9 +30,7 @@ const Conversation: FC = () => {
           <TbArrowLeft />
         </ActionIcon>
         {conversationLoading ? <Loader /> : <Text>{formattedTitle}</Text>}
-        <ActionIcon color="gray" disabled>
-          <TbSettings />
-        </ActionIcon>
+        <ConversationSettings conversation={conversation} />
       </Flex>
       <Divider />
       <ScrollArea.Autosize flex={1} offsetScrollbars pos="relative" viewportRef={viewPortRef}>

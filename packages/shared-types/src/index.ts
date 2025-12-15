@@ -93,6 +93,15 @@ export type ConversationParticipant = {
   joinedAt: string;
 };
 
+export type ArchivedConversation = {
+  id: string;
+  userId: string;
+  otherUserId: string;
+  user: User;
+  otherUser: User;
+  archivedAt: string;
+};
+
 export type Message = {
   id: string;
   conversationId: string;

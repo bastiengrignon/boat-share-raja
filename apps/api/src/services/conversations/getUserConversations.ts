@@ -5,10 +5,18 @@ export const getUserConversations = async (
   req: FastifyRequest<{ Params: QueryUserId }>
 ): Promise<ApiResult<object>> => {
   const { userId } = req.params;
+  const archivedConversations = await req.prisma.archiveConversation.findMany({
+    where: { userId },
+    select: { otherUserId: true },
+  });
+
+  const archivedIds = archivedConversations.map(({ otherUserId }) => otherUserId);
+
   const conversations = await req.prisma.conversation.findMany({
     where: {
       participants: {
         some: { userId },
+        none: { userId: { in: archivedIds } },
       },
     },
     include: {

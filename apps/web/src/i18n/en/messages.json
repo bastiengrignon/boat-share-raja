@@ -17,5 +17,14 @@
       "DECLINED": "Declined",
       "ACCEPTED": "Accepted"
     }
+  },
+  "settings": {
+    "reportUser": "Report user",
+    "reportUserReason": "Reason of report",
+    "reportUserReasonDescription": "Please precise the reason of report",
+    "reportUserReasonError": "The report reason is required",
+    "reportUserSuccess": "Your report has been taken into account",
+    "blockUser": "Block user",
+    "archiveConversation": "Archive conversation"
   }
 }

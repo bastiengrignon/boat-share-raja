@@ -7,6 +7,7 @@ type ApiRoutes = {
   islands: string;
   conversations: string;
   contact: string;
+  moderation: string;
 };
 
 export const HTTP_CODES = {
@@ -34,6 +35,7 @@ export const API_ROUTES: ApiRoutes = {
   islands: '/islands',
   conversations: '/conversations',
   contact: '/contact',
+  moderation: '/moderation',
 };
 
 export const AUTOMATED_MESSAGES = {

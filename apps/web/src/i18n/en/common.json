@@ -45,6 +45,11 @@
     "user": "User settings",
     "errors": {
       "user": "The name must be 2 characters long"
+    },
+    "conversations": {
+      "title": "Archived conversations",
+      "archivedText": "Conversation archived with <italic>{{user}}</italic> on {{date}}",
+      "noArchivedConversations": "No archived conversation"
     }
   }
 }

@@ -17,5 +17,14 @@
       "DECLINED": "Refusée",
       "ACCEPTED": "Acceptée"
     }
+  },
+  "settings": {
+    "reportUser": "Signaler l'utilisateur",
+    "reportUserReason": "Raison du signalement",
+    "reportUserReasonDescription": "Veuillez précisez la raison du signalement",
+    "reportUserReasonError": "La raison du signalement est obligatoire",
+    "reportUserSuccess": "Votre signalement à été pris en compte",
+    "blockUser": "Bloquer l'utilisateur",
+    "archiveConversation": "Archiver la conversation"
   }
 }
