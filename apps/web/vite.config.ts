@@ -1,11 +1,23 @@
 import mdx from '@mdx-js/rollup';
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig, type PluginOption } from 'vite';
+import compression from 'vite-plugin-compression2';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: { host: true },
+  build: {
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router'],
+          query: ['@tanstack/react-query'],
+        },
+      },
+    },
+  },
   plugins: [
     mdx({ providerImportSource: '@mdx-js/react' }) as unknown as PluginOption,
     react(),
@@ -68,6 +80,9 @@ export default defineConfig({
           },
         ],
       },
+    }),
+    compression({
+      algorithms: ['gzip', 'brotliCompress'],
     }),
   ],
 });
