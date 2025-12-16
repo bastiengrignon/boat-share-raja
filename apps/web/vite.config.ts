@@ -6,7 +6,10 @@ import { VitePWA } from 'vite-plugin-pwa';
 import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  server: { host: true },
+  server: {
+    host: true,
+    allowedHosts: true,
+  },
   esbuild: {
     supported: {
       'top-level-await': true,
