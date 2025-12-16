@@ -11,8 +11,7 @@
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:db:push": "prisma db push",
-    "prisma:db:seed": "prisma db seed",
-    "postinstall": "prisma generate"
+    "prisma:db:seed": "prisma db seed"
   },
   "dependencies": {
     "@boat-share-raja/shared-types": "*",
