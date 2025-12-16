@@ -1,5 +1,5 @@
 export default {
-  trustedOrigins: ['http://localhost:5173', 'https://share-boat-api.up.railway.app'],
+  trustedOrigins: ['http://localhost:5173', 'https://share-boat.up.railway.app'],
   logger: {
     development: {
       transport: {
