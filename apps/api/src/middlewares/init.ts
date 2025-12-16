@@ -16,7 +16,7 @@ export const initMiddlewares = ({ app }: { app: FastifyInstance }) => {
   app.register(fastifyCors, {
     origin: serverConfig.trustedOrigins,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept-Language', 'X-Color-Scheme'],
+    // allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept-Language', 'X-Color-Scheme'],
     credentials: true,
     maxAge: TIME.SECONDS_IN_ONE_DAY,
   });
