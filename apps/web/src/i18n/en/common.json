@@ -11,6 +11,7 @@
   "send": "Send",
   "yes": "Yes",
   "no": "No",
+  "errorOccurred": "An error occurred!",
   "languages": {
     "en": "English",
     "fr": "French"

@@ -11,6 +11,7 @@
   "send": "Envoyer",
   "yes": "Oui",
   "no": "Non",
+  "errorOccurred": "Une erreur est survenue !",
   "languages": {
     "en": "Anglais",
     "fr": "Français"
@@ -32,7 +33,12 @@
       "name": "Nom",
       "email": "Adresse email",
       "subject": "Sujet",
-      "message": "Message"
+      "message": "Message",
+      "errors": {
+        "name": "Le nom est obligatoire",
+        "email": "L'adresse email est invalide",
+        "message": "Le message est obligatoire"
+      }
     },
     "privacyPolicy": "Politique de confidentialité",
     "legalNotice": "Mentions légales"

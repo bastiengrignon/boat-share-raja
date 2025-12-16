@@ -46,16 +46,16 @@ export const useFooterHooks = ({ t }: FooterHooksInputProps) => {
   const [openedContactModal, { open: openContactModal, close: closeContactModal }] = useDisclosure(false);
   const contactUsForm = useForm({
     initialValues: {
-      name: '',
+      name: user?.name || '',
       email: '',
       subject: '',
       message: '',
     },
     validateInputOnBlur: true,
     validate: {
-      name: isNotEmpty(t('')),
-      email: isEmail(t('')),
-      message: isNotEmpty(t('')),
+      name: isNotEmpty(t('footer.contactForm.errors.name')),
+      email: isEmail(t('footer.contactForm.errors.email')),
+      message: isNotEmpty(t('footer.contactForm.errors.message')),
     },
     transformValues: (values) => ({
       ...values,
@@ -70,6 +70,7 @@ export const useFooterHooks = ({ t }: FooterHooksInputProps) => {
       closeContactModal();
       contactUsForm.reset();
     },
+    onError: () => contactUsForm.setFieldError('message', t('errorOccurred')),
   });
 
   const handleSubmitContact = useCallback(
