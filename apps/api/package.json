@@ -8,6 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "check-types": "tsc --noEmit",
     "build": "tsc",
+    "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:db:push": "prisma db push",
     "prisma:db:seed": "prisma db seed"
@@ -43,5 +44,8 @@
   "volta": {
     "node": "22.18.0",
     "yarn": "1.22.22"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

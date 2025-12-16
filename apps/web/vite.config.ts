@@ -7,6 +7,11 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   server: { host: true },
+  esbuild: {
+    supported: {
+      'top-level-await': true,
+    },
+  },
   build: {
     target: 'es2020',
     rollupOptions: {
