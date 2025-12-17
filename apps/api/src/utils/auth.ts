@@ -4,7 +4,7 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { anonymous } from 'better-auth/plugins';
 import { localization } from 'better-auth-localization';
 
-import { TIME } from '../constants';
+import { API_ROUTES, TIME } from '../constants';
 import { prisma } from '../middlewares/prisma';
 import serverConfig from './config';
 import env from './env';
@@ -23,7 +23,7 @@ const generateName = (): string => {
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
-  basePath: '/api/auth',
+  basePath: `${API_ROUTES.defaultApiPath}${API_ROUTES.auth}`,
   trustedOrigins: serverConfig.trustedOrigins,
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
   advanced: {
