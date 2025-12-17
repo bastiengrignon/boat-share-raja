@@ -1,5 +1,9 @@
+import env from './env';
+
+const trustedOrigins = env.TRUSTED_ORIGINS?.split(',') ?? [];
+
 export default {
-  trustedOrigins: ['http://localhost:5173', 'https://share-boat.up.railway.app'],
+  trustedOrigins: ['http://localhost:5173', 'https://share-boat.up.railway.app', ...trustedOrigins],
   logger: {
     development: {
       transport: {
