@@ -23,6 +23,7 @@ const generateName = (): string => {
 export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
+  basePath: '/api/auth',
   trustedOrigins: serverConfig.trustedOrigins,
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
   advanced: {
