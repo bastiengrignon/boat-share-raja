@@ -1,6 +1,7 @@
 import fastifyCompress from '@fastify/compress';
 import fastifyCors from '@fastify/cors';
 import fastifyHelmet from '@fastify/helmet';
+import fastifyRateLimit from '@fastify/rate-limit';
 import type { FastifyInstance } from 'fastify';
 
 import { TIME } from '../constants';
@@ -13,6 +14,10 @@ import { prismaPlugin } from './prisma';
 export const initMiddlewares = ({ app }: { app: FastifyInstance }) => {
   app.register(fastifyHelmet);
   app.register(fastifyCompress);
+  app.register(fastifyRateLimit, {
+    max: 100,
+    timeWindow: '1 minute',
+  });
   app.register(fastifyCors, {
     origin: serverConfig.trustedOrigins,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
