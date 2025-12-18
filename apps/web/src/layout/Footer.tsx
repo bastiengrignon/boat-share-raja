@@ -1,8 +1,10 @@
 import { Anchor, Box, Button, Flex, Modal, Stack, Text, Textarea, TextInput } from '@mantine/core';
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { TbSend } from 'react-icons/tb';
 import { Link } from 'react-router';
 
+import { GITHUB_PAGE } from '../assets/legals';
 import { routes } from '../router';
 import { useFooterHooks } from './Layout.hooks';
 
@@ -20,7 +22,14 @@ const Footer: FC = () => {
   return (
     <Box w="100%">
       <Flex justify="space-between">
-        <Text size="xs">{t('footer.description')}</Text>
+        <Text size="xs">
+          <Trans
+            i18nKey="footer.description"
+            components={{
+              a: <Anchor underline="never" href={GITHUB_PAGE} target="_blank" rel="noopener noreferer" />,
+            }}
+          />
+        </Text>
         <Anchor size="xs" component="button" onClick={openContactModal}>
           {t('footer.contactUs')}
         </Anchor>
@@ -52,7 +61,7 @@ const Footer: FC = () => {
               {...contactUsForm.getInputProps('message')}
             />
             <Flex justify="flex-end">
-              <Button type="submit" loading={contactFormLoading}>
+              <Button type="submit" loading={contactFormLoading} rightSection={<TbSend />}>
                 {t('send')}
               </Button>
             </Flex>

@@ -54,3 +54,5 @@ export const AUTOMATED_MESSAGES = {
 };
 
 export const SUPPORT_EMAIL = 'support@bastiengrignon.fr';
+export const APP_NAME_SHORT = 'Boat share';
+export const APP_NAME = `${APP_NAME_SHORT} Raja Ampat`;

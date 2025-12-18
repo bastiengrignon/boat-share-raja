@@ -1,6 +1,7 @@
 import type { ApiResult, ContactFormMessage } from '@boat-share-raja/shared-types';
 import type { FastifyRequest } from 'fastify';
 
+import { APP_NAME } from '../../constants';
 import type { EmailLanguages } from '../../utils/email';
 
 export const sendEmail = async (req: FastifyRequest<{ Body: ContactFormMessage }>): Promise<ApiResult<object>> => {
@@ -15,7 +16,7 @@ export const sendEmail = async (req: FastifyRequest<{ Body: ContactFormMessage }
     templateData: {
       name,
       message,
-      APP_NAME: 'Boat share raja Ampat',
+      APP_NAME,
     },
   });
 

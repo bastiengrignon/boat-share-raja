@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import nodemailer from 'nodemailer';
 import { nodemailerMjmlPlugin } from 'nodemailer-mjml';
 
-import { SUPPORT_EMAIL } from '../constants';
+import { APP_NAME, SUPPORT_EMAIL } from '../constants';
 import env from './env';
 
 export type EmailLanguages = 'fr' | 'en';
@@ -60,7 +60,7 @@ export const emailService = {
   }: EmailProps) => {
     const translatedTemplate = resolveTemplateName(templateName, language);
     return await mailer.sendMail({
-      from: `"Support Boat share" <${SUPPORT_EMAIL}>`,
+      from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
       to: SUPPORT_EMAIL,
       replyTo: from,
       subject,

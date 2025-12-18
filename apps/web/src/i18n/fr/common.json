@@ -26,7 +26,7 @@
     }
   },
   "footer": {
-    "description": "Site web par Bastien Grignon",
+    "description": "Site web par <a>Bastien Grignon</a>",
     "contactUs": "Contactez-nous",
     "contactForm": {
       "title": "Formulaire de contact",

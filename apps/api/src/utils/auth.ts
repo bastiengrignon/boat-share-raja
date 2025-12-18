@@ -4,10 +4,11 @@ import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { anonymous } from 'better-auth/plugins';
 import { localization } from 'better-auth-localization';
 
-import { API_ROUTES, TIME } from '../constants';
+import { API_ROUTES, APP_NAME_SHORT, TIME } from '../constants';
 import { prisma } from '../middlewares/prisma';
 import serverConfig from './config';
 import env from './env';
+import { slug } from './string';
 
 const adjectives = ['Brave', 'Calm', 'Swift', 'Bright', 'Lucky', 'Silent', 'Mighty', 'Clever', 'Gentle', 'Bold'];
 
@@ -21,6 +22,7 @@ const generateName = (): string => {
 };
 
 export const auth = betterAuth({
+  appName: slug(APP_NAME_SHORT),
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
   basePath: `${API_ROUTES.defaultApiPath}${API_ROUTES.auth}`,
@@ -29,6 +31,10 @@ export const auth = betterAuth({
   advanced: {
     database: {
       generateId: 'uuid',
+    },
+    defaultCookieAttributes: {
+      sameSite: 'none',
+      secure: true,
     },
   },
   session: {
