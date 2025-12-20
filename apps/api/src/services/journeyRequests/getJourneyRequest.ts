@@ -1,30 +1,30 @@
-import type { ApiResult } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import { createService } from '../../utils/service';
 
-export const getJourneyRequest = async (
-  req: FastifyRequest<{ Params: { requestId: string } }>
-): Promise<ApiResult<object>> => {
-  const { requestId } = req.params;
-  const journeyRequest = await req.prisma.journeyRequest.findFirst({
-    where: {
-      id: requestId,
-    },
-    include: {
-      journey: true,
-    },
-  });
-  if (!journeyRequest) {
+export const getJourneyRequest = createService<{ Params: { requestId: string } }, object>(
+  'getJourneyRequest',
+  async (req) => {
+    const { requestId } = req.params;
+    const journeyRequest = await req.prisma.journeyRequest.findFirst({
+      where: {
+        id: requestId,
+      },
+      include: {
+        journey: true,
+      },
+    });
+    if (!journeyRequest) {
+      return {
+        status: 'ERROR',
+        error: 'REQUEST_NOT_FOUND',
+        data: null,
+      };
+    }
+
     return {
-      status: 'ERROR',
-      error: 'REQUEST_NOT_FOUND',
-      data: null,
+      status: 'SUCCESS',
+      data: {
+        journeyRequest,
+      },
     };
   }
-
-  return {
-    status: 'SUCCESS',
-    data: {
-      journeyRequest,
-    },
-  };
-};
+);

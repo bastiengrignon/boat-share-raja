@@ -1,10 +1,10 @@
-import type { ApiResult, ContactFormMessage } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import type { ContactFormMessage } from '@boat-share-raja/shared-types';
 
 import { APP_NAME } from '../../constants';
 import type { EmailLanguages } from '../../utils/email';
+import { createService } from '../../utils/service';
 
-export const sendEmail = async (req: FastifyRequest<{ Body: ContactFormMessage }>): Promise<ApiResult<object>> => {
+export const sendEmail = createService<{ Body: ContactFormMessage }, object>('sendSupportEmail', async (req) => {
   const { userId, name, email, subject, message } = req.body;
   const language = req.language ?? 'en';
 
@@ -26,4 +26,4 @@ export const sendEmail = async (req: FastifyRequest<{ Body: ContactFormMessage }
     status: 'SUCCESS',
     data: null,
   };
-};
+});

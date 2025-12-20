@@ -1,7 +1,6 @@
-import type { ApiResult } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import { createService } from '../../utils/service';
 
-export const getIslands = async (req: FastifyRequest): Promise<ApiResult<object>> => {
+export const getIslands = createService<object, object>('getIslands', async (req) => {
   const islands = await req.prisma.island.findMany({
     select: {
       id: true,
@@ -14,4 +13,4 @@ export const getIslands = async (req: FastifyRequest): Promise<ApiResult<object>
       islands,
     },
   };
-};
+});

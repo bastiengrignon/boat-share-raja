@@ -1,15 +1,13 @@
-import type { ApiResult } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
 import { z } from 'zod';
+
+import { createService } from '../../utils/service';
 
 const blockBodySchema = z.object({
   userId: z.string(),
   blockedUserId: z.string(),
 });
 
-export const blockUser = async (
-  req: FastifyRequest<{ Body: z.infer<typeof blockBodySchema> }>
-): Promise<ApiResult<object>> => {
+export const blockUser = createService<{ Body: z.infer<typeof blockBodySchema> }, object>('blockUser', async (req) => {
   const { userId, blockedUserId } = req.body;
 
   if (userId === blockedUserId) {
@@ -30,4 +28,4 @@ export const blockUser = async (
     status: 'SUCCESS',
     data: blockedUser,
   };
-};
+});
