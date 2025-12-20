@@ -1,9 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import fp from 'fastify-plugin';
 
-export const prisma = new PrismaClient({
-  log: ['warn', 'error'],
-});
+import { prisma } from '../utils/prisma';
 
 export const prismaPlugin = fp(async (app) => {
   if (app.prisma) {

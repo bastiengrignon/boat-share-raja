@@ -2,11 +2,9 @@ import type { ApiResult, CreateJourney } from '@boat-share-raja/shared-types';
 import dayjs from 'dayjs';
 import type { FastifyRequest } from 'fastify';
 
-import { prisma } from '../../middlewares/prisma';
-
 export const addJourney = async (req: FastifyRequest<{ Body: CreateJourney }>): Promise<ApiResult<object>> => {
   const body = req.body;
-  const newJourney = await prisma.journey.create({
+  const newJourney = await req.prisma.journey.create({
     data: {
       from: body.from,
       to: body.to,

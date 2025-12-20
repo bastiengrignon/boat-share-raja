@@ -5,9 +5,9 @@ import { anonymous } from 'better-auth/plugins';
 import { localization } from 'better-auth-localization';
 
 import { API_ROUTES, APP_NAME_SHORT, TIME } from '../constants';
-import { prisma } from '../middlewares/prisma';
 import serverConfig from './config';
 import env from './env';
+import { prisma } from './prisma';
 import { slug } from './string';
 
 const adjectives = ['Brave', 'Calm', 'Swift', 'Bright', 'Lucky', 'Silent', 'Mighty', 'Clever', 'Gentle', 'Bold'];
