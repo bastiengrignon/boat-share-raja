@@ -2,7 +2,7 @@ import type { ArchivedConversation } from '@boat-share-raja/shared-types';
 import { hasLength, useField } from '@mantine/form';
 import { useQuery } from '@tanstack/react-query';
 import type { TFunction } from 'i18next';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { authClient } from '../../lib/auth-client';
 import { useAuthSession } from '../../lib/useSession';
@@ -25,7 +25,7 @@ export const useSettingsHooks = ({ t }: SettingsHookProp) => {
     enabled: !!user,
     queryKey: ['archivedConversations', user?.id],
     // biome-ignore lint/style/noNonNullAssertion: user is always defined here
-    queryFn: () => conversationService.getArchivedConversations({ userId: user?.id! }),
+    queryFn: () => conversationService.getArchivedConversations({ userId: user!.id }),
   });
 
   const archivedConversations = useMemo<ArchivedConversation[]>(
@@ -35,6 +35,13 @@ export const useSettingsHooks = ({ t }: SettingsHookProp) => {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: no Mantine form object
   const handleSaveOnBlur = useCallback(() => authClient.updateUser({ name: fullNameField.getValue() }), []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: no Mantine form object
+  useEffect(() => {
+    if (user?.name) {
+      fullNameField.setValue(user.name);
+    }
+  }, [user?.name]);
 
   return {
     fullNameField,
