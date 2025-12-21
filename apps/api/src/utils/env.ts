@@ -16,6 +16,7 @@ const envSchema = z.object({
   SMTP_USER: z.string(),
   SMTP_PASS: z.string(),
   TRUSTED_ORIGINS: z.string().optional(),
+  RESEND_API_KEY: z.string(),
 });
 
 const env = envSchema.parse(process.env);

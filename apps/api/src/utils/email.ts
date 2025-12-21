@@ -3,6 +3,7 @@ import { join } from 'node:path';
 
 import nodemailer from 'nodemailer';
 import { nodemailerMjmlPlugin } from 'nodemailer-mjml';
+import { Resend } from 'resend';
 
 import { APP_NAME, SUPPORT_EMAIL } from '../constants';
 import env from './env';
@@ -15,6 +16,12 @@ interface EmailProps {
   templateName: TemplateName;
   templateData?: Record<string, unknown>;
   language: EmailLanguages;
+}
+
+interface ResendEmailProps {
+  subject?: string;
+  from: string;
+  message: string;
 }
 
 const TEMPLATES_NAME = {
@@ -48,6 +55,8 @@ const mailer = nodemailer.createTransport({
   },
 });
 
+const resend = new Resend(env.RESEND_API_KEY);
+
 mailer.use('compile', nodemailerMjmlPlugin({ templateFolder }));
 
 export const emailService = {
@@ -69,8 +78,22 @@ export const emailService = {
         templateData,
       });
     } catch (error) {
-      console.error(`Email end error: ${error}`);
+      console.error(`Email send error: ${error}`);
     }
+  },
+  sendResendEmail: async ({ from, message, subject = 'New Support request' }: ResendEmailProps) => {
+    const { data, error } = await resend.emails.send({
+      from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
+      to: SUPPORT_EMAIL,
+      replyTo: from,
+      subject,
+      html: message,
+      text: message,
+    });
+
+    if (error) return error;
+
+    return data;
   },
 };
 
