@@ -58,15 +58,19 @@ export const emailService = {
     language = 'en',
     subject = 'New Support request',
   }: EmailProps) => {
-    const translatedTemplate = resolveTemplateName(templateName, language);
-    return await mailer.sendMail({
-      from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
-      to: SUPPORT_EMAIL,
-      replyTo: from,
-      subject,
-      templateName: translatedTemplate,
-      templateData,
-    });
+    try {
+      const translatedTemplate = resolveTemplateName(templateName, language);
+      return await mailer.sendMail({
+        from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
+        to: SUPPORT_EMAIL,
+        replyTo: from,
+        subject,
+        templateName: translatedTemplate,
+        templateData,
+      });
+    } catch (error) {
+      console.error(`Email end error: ${error}`);
+    }
   },
 };
 

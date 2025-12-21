@@ -1,9 +1,7 @@
-import type { ApiResult } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
-
 import { sendMessageInConversation } from '../../utils/message';
+import { createService } from '../../utils/service';
 
-export const deleteJourney = async (req: FastifyRequest<{ Params: { id: string } }>): Promise<ApiResult<object>> => {
+export const deleteJourney = createService<{ Params: { id: string } }, object>('deleteJourney', async (req) => {
   const { id: journeyId } = req.params;
 
   const journeyToDelete = await req.prisma.journey.findFirst({
@@ -90,4 +88,4 @@ export const deleteJourney = async (req: FastifyRequest<{ Params: { id: string }
     status: 'SUCCESS',
     data: null,
   };
-};
+});

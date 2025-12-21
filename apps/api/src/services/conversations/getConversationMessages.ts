@@ -1,9 +1,11 @@
-import type { ApiResult, QueryConversationId } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import type { QueryConversationId } from '@boat-share-raja/shared-types';
 
-export const getConversationMessages = async (
-  req: FastifyRequest<{ Params: QueryConversationId; Querystring: { cursor?: string; take?: string } }>
-): Promise<ApiResult<object>> => {
+import { createService } from '../../utils/service';
+
+export const getConversationMessages = createService<
+  { Params: QueryConversationId; Querystring: { cursor?: string; take?: string } },
+  object
+>('getConversationMessages', async (req) => {
   const { conversationId } = req.params;
   const take = req.query.take ? Number(req.query.take) : 20;
   const cursor = req.query.cursor;
@@ -35,4 +37,4 @@ export const getConversationMessages = async (
       hasMore,
     },
   };
-};
+});

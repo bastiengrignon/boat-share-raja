@@ -1,32 +1,35 @@
-import type { ApiResult, EditJourney } from '@boat-share-raja/shared-types';
+import type { EditJourney } from '@boat-share-raja/shared-types';
+import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
-import type { FastifyRequest } from 'fastify';
 
-export const updateJourney = async (
-  req: FastifyRequest<{ Body: EditJourney; Params: { id: string } }>
-): Promise<ApiResult<object>> => {
-  const body = req.body;
-  const updatedJourney = await req.prisma.journey.update({
-    where: {
-      id: req.params.id,
-    },
-    data: {
-      from: body.from,
-      to: body.to,
-      date: dayjs(body.date).toDate(),
-      numberOfPeople: body.numberOfPeople,
-      maxNumberOfPeople: body.maxNumberOfPeople,
-      time: body.time,
-      price: body.price,
-      notes: body.notes,
-    },
-    omit: {
-      updatedAt: true,
-    },
-  });
+import { createService } from '../../utils/service';
 
-  return {
-    status: 'SUCCESS',
-    data: updatedJourney,
-  };
-};
+export const updateJourney = createService<{ Body: EditJourney; Params: { id: string } }, Omit<Journey, 'updatedAt'>>(
+  'updateJourney',
+  async (req) => {
+    const body = req.body;
+    const updatedJourney = await req.prisma.journey.update({
+      where: {
+        id: req.params.id,
+      },
+      data: {
+        from: body.from,
+        to: body.to,
+        date: dayjs(body.date).toDate(),
+        numberOfPeople: body.numberOfPeople,
+        maxNumberOfPeople: body.maxNumberOfPeople,
+        time: body.time,
+        price: body.price,
+        notes: body.notes,
+      },
+      omit: {
+        updatedAt: true,
+      },
+    });
+
+    return {
+      status: 'SUCCESS',
+      data: updatedJourney,
+    };
+  }
+);

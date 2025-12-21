@@ -1,79 +1,81 @@
-import type { ApiResult, QueryUserId } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import type { QueryUserId } from '@boat-share-raja/shared-types';
 
-export const getUserConversations = async (
-  req: FastifyRequest<{ Params: QueryUserId }>
-): Promise<ApiResult<object>> => {
-  const { userId } = req.params;
-  const archivedConversations = await req.prisma.archiveConversation.findMany({
-    where: { userId },
-    select: { otherUserId: true },
-  });
+import { createService } from '../../utils/service';
 
-  const archivedIds = archivedConversations.map(({ otherUserId }) => otherUserId);
+export const getUserConversations = createService<{ Params: QueryUserId }, { conversations: object }>(
+  'getUserConversations',
+  async (req) => {
+    const { userId } = req.params;
+    const archivedConversations = await req.prisma.archiveConversation.findMany({
+      where: { userId },
+      select: { otherUserId: true },
+    });
 
-  const userBlocks = await req.prisma.userBlock.findMany({
-    where: {
-      OR: [{ blockerId: userId }, { blockedId: userId }],
-    },
-    select: { blockerId: true, blockedId: true },
-  });
+    const archivedIds = archivedConversations.map(({ otherUserId }) => otherUserId);
 
-  const blockedIds = userBlocks.map(({ blockedId, blockerId }) => (blockerId === userId ? blockedId : blockerId));
-  const excludedIds = Array.from(new Set([...archivedIds, ...blockedIds]));
-
-  const conversations = await req.prisma.conversation.findMany({
-    where: {
-      participants: {
-        some: { userId },
-        none: { userId: { in: excludedIds } },
+    const userBlocks = await req.prisma.userBlock.findMany({
+      where: {
+        OR: [{ blockerId: userId }, { blockedId: userId }],
       },
-    },
-    include: {
-      participants: {
-        include: {
-          user: true,
+      select: { blockerId: true, blockedId: true },
+    });
+
+    const blockedIds = userBlocks.map(({ blockedId, blockerId }) => (blockerId === userId ? blockedId : blockerId));
+    const excludedIds = Array.from(new Set([...archivedIds, ...blockedIds]));
+
+    const conversations = await req.prisma.conversation.findMany({
+      where: {
+        participants: {
+          some: { userId },
+          none: { userId: { in: excludedIds } },
         },
       },
-      messages: {
-        orderBy: { createdAt: 'desc' },
-        take: 1,
-        include: {
-          sender: true,
-        },
-      },
-    },
-    orderBy: { updatedAt: 'desc' },
-    omit: {
-      createdAt: true,
-    },
-  });
-
-  const conversationsWithUnread = await Promise.all(
-    conversations.map(async (conversation) => {
-      const unreadCount = await req.prisma.message.count({
-        where: {
-          conversationId: conversation.id,
-          senderId: { not: userId },
-          reads: {
-            none: {
-              userId,
-            },
+      include: {
+        participants: {
+          include: {
+            user: true,
           },
         },
-      });
+        messages: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+          include: {
+            sender: true,
+          },
+        },
+      },
+      orderBy: { updatedAt: 'desc' },
+      omit: {
+        createdAt: true,
+      },
+    });
 
-      return {
-        ...conversation,
-        unreadCount,
-      };
-    })
-  );
+    const conversationsWithUnread = await Promise.all(
+      conversations.map(async (conversation) => {
+        const unreadCount = await req.prisma.message.count({
+          where: {
+            conversationId: conversation.id,
+            senderId: { not: userId },
+            reads: {
+              none: {
+                userId,
+              },
+            },
+          },
+        });
 
-  return {
-    status: 'SUCCESS',
-    data: {
-      conversations: conversationsWithUnread,
-    },
-  };
-};
+        return {
+          ...conversation,
+          unreadCount,
+        };
+      })
+    );
+
+    return {
+      status: 'SUCCESS',
+      data: {
+        conversations: conversationsWithUnread,
+      },
+    };
+  }
+);

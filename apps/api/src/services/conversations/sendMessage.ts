@@ -1,8 +1,9 @@
-import type { ApiResult, QueryConversationId } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import type { QueryConversationId } from '@boat-share-raja/shared-types';
+import type { Message } from '@prisma/client';
 import { z } from 'zod';
 
 import { sendMessageInConversation } from '../../utils/message';
+import { createService } from '../../utils/service';
 
 const sendMessageBodySchema = z.object({
   senderId: z.uuid(),
@@ -11,9 +12,10 @@ const sendMessageBodySchema = z.object({
   participantIds: z.array(z.uuid()).min(2).optional(),
 });
 
-export const sendMessage = async (
-  req: FastifyRequest<{ Params: QueryConversationId; Body: z.infer<typeof sendMessageBodySchema> }>
-): Promise<ApiResult<object>> => {
+export const sendMessage = createService<
+  { Params: QueryConversationId; Body: z.infer<typeof sendMessageBodySchema> },
+  { message: Message }
+>('sendMessage', async (req) => {
   const { conversationId } = req.params;
   const parseResult = sendMessageBodySchema.safeParse(req.body);
 
@@ -56,4 +58,4 @@ export const sendMessage = async (
       message,
     },
   };
-};
+});

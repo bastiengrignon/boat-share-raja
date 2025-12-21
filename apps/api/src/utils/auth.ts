@@ -1,10 +1,10 @@
-/** biome-ignore-all lint/style/noMagicNumbers: compute session expiration and cache */
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { anonymous } from 'better-auth/plugins';
 import { localization } from 'better-auth-localization';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { API_ROUTES, APP_NAME_SHORT, TIME } from '../constants';
+import { API_ROUTES, APP_NAME_SHORT, HTTP_CODES, TIME } from '../constants';
 import serverConfig from './config';
 import env from './env';
 import { prisma } from './prisma';
@@ -55,3 +55,34 @@ export const auth = betterAuth({
     }),
   ],
 });
+
+export const fastifyBetterAuthHandler = async (request: FastifyRequest, reply: FastifyReply) => {
+  try {
+    const url = new URL(request.url, `http://${request.headers.host}`);
+
+    const headers = new Headers();
+    Object.entries(request.headers).forEach(([key, value]) => {
+      if (value) headers.append(key, value.toString());
+    });
+
+    const req = new Request(url.toString(), {
+      method: request.method,
+      headers,
+      body: request.body ? JSON.stringify(request.body) : undefined,
+    });
+
+    const response = await auth.handler(req);
+
+    reply.status(response.status);
+    response.headers.forEach((value, key) => {
+      reply.header(key, value);
+    });
+    reply.send(response.body ? await response.text() : null);
+  } catch (error) {
+    request.log.error(`Authentication Error: ${error}`);
+    reply.status(HTTP_CODES.INTERNAL_SERVER_ERROR).send({
+      error: 'Internal authentication error',
+      code: 'AUTH_FAILURE',
+    });
+  }
+};

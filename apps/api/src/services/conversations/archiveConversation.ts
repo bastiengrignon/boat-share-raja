@@ -1,15 +1,20 @@
-import type { ApiResult, QueryConversationId } from '@boat-share-raja/shared-types';
+import type { QueryConversationId } from '@boat-share-raja/shared-types';
 import dayjs from 'dayjs';
-import type { FastifyRequest } from 'fastify';
 import { z } from 'zod';
+
+import { createService } from '../../utils/service';
 
 const archiveConversationBodySchema = z.object({
   userId: z.string(),
 });
 
-export const archiveConversation = async (
-  req: FastifyRequest<{ Body: z.infer<typeof archiveConversationBodySchema>; Params: QueryConversationId }>
-): Promise<ApiResult<object>> => {
+export const archiveConversation = createService<
+  {
+    Params: QueryConversationId;
+    Body: z.infer<typeof archiveConversationBodySchema>;
+  },
+  { archivedConversations: object }
+>('archiveConversation', async (req) => {
   const { conversationId } = req.params;
   const { userId } = req.body;
 
@@ -50,4 +55,4 @@ export const archiveConversation = async (
     status: 'SUCCESS',
     data: { archivedConversations },
   };
-};
+});

@@ -8,7 +8,7 @@ const reportUserBodySchema = z.object({
   reason: z.string(),
 });
 
-export const reportUser = createService<{ Body: z.infer<typeof reportUserBodySchema> }, object>(
+export const reportUser = createService<{ Body: z.infer<typeof reportUserBodySchema> }, { report: object }>(
   'reportUser',
   async (req) => {
     const { userId, reportedUserId, reason } = req.body;

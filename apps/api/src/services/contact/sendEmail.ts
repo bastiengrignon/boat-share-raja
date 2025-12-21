@@ -4,7 +4,7 @@ import { APP_NAME } from '../../constants';
 import type { EmailLanguages } from '../../utils/email';
 import { createService } from '../../utils/service';
 
-export const sendEmail = createService<{ Body: ContactFormMessage }, object>('sendSupportEmail', async (req) => {
+export const sendEmail = createService<{ Body: ContactFormMessage }, boolean>('sendSupportEmail', async (req) => {
   const { userId, name, email, subject, message } = req.body;
   const language = req.language ?? 'en';
 
@@ -24,6 +24,6 @@ export const sendEmail = createService<{ Body: ContactFormMessage }, object>('se
 
   return {
     status: 'SUCCESS',
-    data: null,
+    data: true,
   };
 });

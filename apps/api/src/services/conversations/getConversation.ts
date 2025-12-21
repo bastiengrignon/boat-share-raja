@@ -1,33 +1,35 @@
-import type { ApiResult, QueryConversationId } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
+import type { QueryConversationId } from '@boat-share-raja/shared-types';
 
-export const getConversation = async (
-  req: FastifyRequest<{ Params: QueryConversationId }>
-): Promise<ApiResult<object>> => {
-  const conversation = await req.prisma.conversation.findFirst({
-    where: {
-      id: req.params.conversationId,
-    },
-    include: {
-      participants: {
-        include: {
-          user: true,
+import { createService } from '../../utils/service';
+
+export const getConversation = createService<{ Params: QueryConversationId }, object>(
+  'getConversation',
+  async (req) => {
+    const conversation = await req.prisma.conversation.findFirst({
+      where: {
+        id: req.params.conversationId,
+      },
+      include: {
+        participants: {
+          include: {
+            user: true,
+          },
         },
       },
-    },
-  });
-  if (!conversation) {
+    });
+    if (!conversation) {
+      return {
+        status: 'ERROR',
+        error: 'CONVERSATION_NOT_FOUND',
+        data: null,
+      };
+    }
+
     return {
-      status: 'ERROR',
-      error: 'CONVERSATION_NOT_FOUND',
-      data: null,
+      status: 'SUCCESS',
+      data: {
+        conversation,
+      },
     };
   }
-
-  return {
-    status: 'SUCCESS',
-    data: {
-      conversation,
-    },
-  };
-};
+);

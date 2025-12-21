@@ -1,14 +1,16 @@
 import type { QueryConversationId } from '@boat-share-raja/shared-types';
-import type { FastifyRequest } from 'fastify';
 import { z } from 'zod';
+
+import { createService } from '../../utils/service';
 
 const markConversationAsReadBodySchema = z.object({
   userId: z.uuid(),
 });
 
-export const markConversationAsRead = async (
-  req: FastifyRequest<{ Params: QueryConversationId; Body: z.infer<typeof markConversationAsReadBodySchema> }>
-) => {
+export const markConversationAsRead = createService<
+  { Params: QueryConversationId; Body: z.infer<typeof markConversationAsReadBodySchema> },
+  { updated: number }
+>('markConversationAsRead', async (req) => {
   const { conversationId } = req.params;
   const parseResult = markConversationAsReadBodySchema.safeParse(req.body);
 
@@ -66,4 +68,4 @@ export const markConversationAsRead = async (
     status: 'SUCCESS',
     data: { updated: unreadMessages.length },
   };
-};
+});
