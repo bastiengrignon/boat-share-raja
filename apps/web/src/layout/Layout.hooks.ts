@@ -2,7 +2,7 @@ import { isEmail, isNotEmpty, type TransformedValues, useForm } from '@mantine/f
 import { useDisclosure, useWindowEvent } from '@mantine/hooks';
 import { useMutation } from '@tanstack/react-query';
 import type { TFunction } from 'i18next';
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { matchPath, useLocation } from 'react-router';
 
 import { useAuthSession } from '../lib/useSession';
@@ -30,9 +30,11 @@ export const useLayoutHooks = () => {
     }
   });
 
+  const isSettingsRoute = useMemo(() => matchSettings !== null, [matchSettings]);
+
   return {
     isInsideConversation: matchConversation !== null,
-    isSettingsRoute: matchSettings !== null,
+    isSettingsRoute,
     footerRef,
   };
 };
