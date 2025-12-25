@@ -1,6 +1,5 @@
 <mjml>
   <mj-body background-color="#f5f5f5">
-
     <mj-section background-color="#ffffff" padding="20px">
       <mj-column>
         <mj-text font-size="20px" font-weight="bold">
@@ -27,10 +26,9 @@
     <mj-section>
       <mj-column>
         <mj-text font-size="12px" color="#888">
-          Envoyé automatiquement par le système de support {{APP_NAME}}
+          Envoyé automatiquement par le système de support {{{APP_NAME}}}
         </mj-text>
       </mj-column>
     </mj-section>
-
   </mj-body>
 </mjml>

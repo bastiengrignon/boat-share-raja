@@ -1,97 +1,100 @@
-import { existsSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import nodemailer from 'nodemailer';
-import { nodemailerMjmlPlugin } from 'nodemailer-mjml';
+import { compile } from 'handlebars';
+import mjml2html from 'mjml';
 import { Resend } from 'resend';
 
 import { APP_NAME, SUPPORT_EMAIL } from '../constants';
 import env from './env';
 
-export type EmailLanguages = 'fr' | 'en';
+type TemplateEmailVariables = Record<string, string | number>;
+type SupportedEmailLanguages = 'en' | 'fr';
 
-interface EmailProps {
-  subject?: string;
+type BaseEmailOptions = {
   from: string;
-  templateName: TemplateName;
-  templateData?: Record<string, unknown>;
-  language: EmailLanguages;
-}
+  subject?: string;
+};
 
-interface ResendEmailProps {
-  subject?: string;
-  from: string;
+type MessageEmail = {
   message: string;
-}
+  templateName?: never;
+  templateVariables?: never;
+};
 
-const TEMPLATES_NAME = {
+type TemplateEmail = {
+  templateName: TemplateName;
+  templateVariables?: TemplateEmailVariables;
+  message?: never;
+};
+type SendEmailOptions = BaseEmailOptions & (MessageEmail | TemplateEmail);
+
+export const TEMPLATES_NAME = {
   supportRequest: 'supportRequest',
 };
 
 type TemplateName = keyof typeof TEMPLATES_NAME;
 
-const templateFolder = join(__dirname, '../email-templates');
+const renderMjmlTemplate = (
+  templateName: TemplateName,
+  language: SupportedEmailLanguages,
+  variables: TemplateEmailVariables
+): string => {
+  const templatePath = join(__dirname, '../email-templates', `${templateName}-${language}.mjml`);
+  const mjmlTemplate = readFileSync(templatePath, 'utf-8');
 
-const resolveTemplateName = (baseName: string, language: EmailLanguages) => {
-  const localized = `${baseName}-${language}`;
-  const fallback = `${baseName}-en`;
+  const handlebarsTemplate = compile(mjmlTemplate);
+  const compiledMjml = handlebarsTemplate(variables);
 
-  const localizedPath = join(templateFolder, `${localized}.mjml`);
-  if (existsSync(localizedPath)) return localized;
+  const { html, errors } = mjml2html(compiledMjml);
 
-  const fallbackPath = join(templateFolder, `${fallback}.mjml`);
-  if (existsSync(fallbackPath)) return fallback;
+  if (errors?.length) {
+    console.error('MJML rendering errors:', errors);
+  }
 
-  return baseName;
+  return html;
 };
-
-const mailer = nodemailer.createTransport({
-  host: env.SMTP_HOST,
-  port: Number(env.SMTP_PORT),
-  secure: false,
-  auth: {
-    user: env.SMTP_USER,
-    pass: env.SMTP_PASS,
-  },
-});
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-mailer.use('compile', nodemailerMjmlPlugin({ templateFolder }));
-
 export const emailService = {
-  sendSupportEmail: async ({
+  sendResendEmail: async ({
     from,
-    templateName,
-    templateData,
-    language = 'en',
+    message,
     subject = 'New Support request',
-  }: EmailProps) => {
-    try {
-      const translatedTemplate = resolveTemplateName(templateName, language);
-      return await mailer.sendMail({
-        from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
-        to: SUPPORT_EMAIL,
-        replyTo: from,
-        subject,
-        templateName: translatedTemplate,
-        templateData,
-      });
-    } catch (error) {
-      console.error(`Email send error: ${error}`);
+    templateName,
+    templateVariables,
+  }: SendEmailOptions) => {
+    let html: string;
+    let text: string;
+
+    if (templateName) {
+      const language = templateVariables?.language || 'en';
+      const variables = {
+        ...templateVariables,
+        APP_NAME,
+      };
+
+      html = renderMjmlTemplate(templateName, String(language) as SupportedEmailLanguages, variables);
+      text = '';
+    } else {
+      html = message;
+      text = message;
     }
-  },
-  sendResendEmail: async ({ from, message, subject = 'New Support request' }: ResendEmailProps) => {
+
     const { data, error } = await resend.emails.send({
       from: `"Support ${APP_NAME}" <${SUPPORT_EMAIL}>`,
       to: SUPPORT_EMAIL,
       replyTo: from,
       subject,
-      html: message,
-      text: message,
+      html,
+      text,
     });
 
-    if (error) return error;
+    if (error) {
+      console.error(error);
+      return error;
+    }
 
     return data;
   },
