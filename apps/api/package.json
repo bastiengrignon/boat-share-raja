@@ -8,12 +8,11 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "check-types": "tsc --noEmit",
-    "build": "tsc && cp -r src/email-templates dist/email-templates",
+    "build": "yarn prisma:generate && tsc && cp -r src/email-templates dist/email-templates",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:db:push": "prisma db push",
-    "prisma:db:seed": "prisma db seed",
-    "postinstall": "yarn prisma:generate"
+    "prisma:db:seed": "prisma db seed"
   },
   "dependencies": {
     "@boat-share-raja/shared-types": "*",
