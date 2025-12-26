@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { compile } from 'handlebars';
+import handlebars from 'handlebars';
 import mjml2html from 'mjml';
 import { Resend } from 'resend';
 
@@ -43,7 +43,7 @@ const renderMjmlTemplate = (
   const templatePath = join(__dirname, '../email-templates', `${templateName}-${language}.mjml`);
   const mjmlTemplate = readFileSync(templatePath, 'utf-8');
 
-  const handlebarsTemplate = compile(mjmlTemplate);
+  const handlebarsTemplate = handlebars.compile(mjmlTemplate);
   const compiledMjml = handlebarsTemplate(variables);
 
   const { html, errors } = mjml2html(compiledMjml);
