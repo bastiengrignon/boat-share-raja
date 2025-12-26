@@ -1,37 +1,28 @@
-import { z } from 'zod';
+import type { ReportUserBody } from '@boat-share-raja/shared-types';
 
 import { createService } from '../../utils/service';
 
-const reportUserBodySchema = z.object({
-  userId: z.string(),
-  reportedUserId: z.string(),
-  reason: z.string(),
-});
+export const reportUser = createService<{ Body: ReportUserBody }, { report: object }>('reportUser', async (req) => {
+  const { userId, reportedUserId, reason } = req.body;
 
-export const reportUser = createService<{ Body: z.infer<typeof reportUserBodySchema> }, { report: object }>(
-  'reportUser',
-  async (req) => {
-    const { userId, reportedUserId, reason } = req.body;
-
-    if (userId === reportedUserId) {
-      return {
-        status: 'ERROR',
-        error: 'CANNOT_REPORT_YOURSELF',
-        data: null,
-      };
-    }
-
-    const report = await req.prisma.userReport.create({
-      data: {
-        reporterId: userId,
-        reportedId: reportedUserId,
-        reason,
-      },
-    });
-
+  if (userId === reportedUserId) {
     return {
-      status: 'SUCCESS',
-      data: { report },
+      status: 'ERROR',
+      error: 'CANNOT_REPORT_YOURSELF',
+      data: null,
     };
   }
-);
+
+  const report = await req.prisma.userReport.create({
+    data: {
+      reporterId: userId,
+      reportedId: reportedUserId,
+      reason,
+    },
+  });
+
+  return {
+    status: 'SUCCESS',
+    data: { report },
+  };
+});

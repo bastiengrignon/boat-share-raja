@@ -1,9 +1,10 @@
 import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
+import type { RouteGenericInterface } from 'fastify';
 
 import { createService } from '../../utils/service';
 
-export const getAllJourneys = createService<object, { journeys: Omit<Journey, 'updatedAt'>[] }>(
+export const getAllJourneys = createService<RouteGenericInterface, { journeys: Omit<Journey, 'updatedAt'>[] }>(
   'getAllJourneys',
   async (req) => {
     const journeys = await req.prisma.journey.findMany({

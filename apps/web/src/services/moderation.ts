@@ -1,12 +1,12 @@
-import type { QueryUserId } from '@boat-share-raja/shared-types';
+import type { BlockUserBody, ReportUserBody } from '@boat-share-raja/shared-types';
 
 import { boatSharingApi } from '../lib/api';
 
 const moderationRoute = '/moderation';
 
 export const moderationService = {
-  blockUser: async ({ userId, blockedUserId }: QueryUserId & { blockedUserId: string }) =>
+  blockUser: async ({ userId, blockedUserId }: BlockUserBody) =>
     (await boatSharingApi.post(`${moderationRoute}/block`, { userId, blockedUserId })).data,
-  reportUser: async ({ userId, reportedUserId, reason }: QueryUserId & { reportedUserId: string; reason: string }) =>
+  reportUser: async ({ userId, reportedUserId, reason }: ReportUserBody) =>
     (await boatSharingApi.post(`${moderationRoute}/report`, { userId, reportedUserId, reason })).data,
 };

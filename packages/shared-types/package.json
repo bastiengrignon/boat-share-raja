@@ -21,7 +21,8 @@
   "private": true,
   "devDependencies": {
     "@boat-share-raja/typescript-config": "*",
-    "typescript": "latest"
+    "typescript": "latest",
+    "zod": "^4.2.1"
   },
   "volta": {
     "node": "22.18.0",

@@ -18,8 +18,9 @@ export const createService =
       const elapsedTime = Date.now() - startTime;
       req.log.info(`Service ${serviceName} finished in ${elapsedTime}ms`);
       return result;
-    } catch (error) {
-      req.log.error(`Something went terribly wrong while requesting ${serviceName} -> ${error}`);
+      // biome-ignore lint/suspicious/noExplicitAny: custom error handling
+    } catch (error: any) {
+      req.log.error(`Something went terribly wrong while requesting ${serviceName} -> ${error?.message}`);
       return {
         status: 'ERROR',
         error: 'INTERNAL_SERVER_ERROR',

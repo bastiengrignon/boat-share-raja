@@ -1,8 +1,10 @@
+import type { DeleteJourneyParams } from '@boat-share-raja/shared-types';
+
 import { sendMessageInConversation } from '../../utils/message';
 import { createService } from '../../utils/service';
 
-export const deleteJourney = createService<{ Params: { id: string } }, object>('deleteJourney', async (req) => {
-  const { id: journeyId } = req.params;
+export const deleteJourney = createService<{ Params: DeleteJourneyParams }, object>('deleteJourney', async (req) => {
+  const { journeyId } = req.params;
 
   const journeyToDelete = await req.prisma.journey.findFirst({
     where: {

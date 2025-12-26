@@ -1,10 +1,10 @@
-import type { CreateJourney } from '@boat-share-raja/shared-types';
+import type { AddJourneyBody } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
 
 import { createService } from '../../utils/service';
 
-export const addJourney = createService<{ Body: CreateJourney }, Omit<Journey, 'updatedAt'>>(
+export const addJourney = createService<{ Body: AddJourneyBody }, Omit<Journey, 'updatedAt'>>(
   'addJourney',
   async (req) => {
     const body = req.body;

@@ -1,5 +1,13 @@
+import type { z } from 'zod';
+
+import { contactSchema } from './contact';
+import type { queryConversationId, queryUserIdSchema, userSchema } from './helpers';
+import { journeySchemas } from './journey';
+import { journeyRequestSchemas } from './journeyRequest';
+import { moderationSchemas } from './moderation';
+
 export type ApiResult<T> = {
-  status: string;
+  status: 'SUCCESS' | 'ERROR';
   error?: string;
   data: T | null;
 };
@@ -16,12 +24,12 @@ export type QueryId = {
   id: string;
 };
 
-export type QueryUserId = {
-  userId: string;
-};
+export type QueryUserId = z.infer<typeof queryUserIdSchema>;
 
-export type QueryConversationId = {
-  conversationId: string;
+export type QueryConversationId = z.infer<typeof queryConversationId>;
+
+export type QueryRequestId = {
+  requestId: string;
 };
 
 export type Journey = {
@@ -49,26 +57,7 @@ export type JourneyRequest = {
   journey: Journey;
 };
 
-export type CreateJourney = Pick<
-  Journey,
-  'user' | 'numberOfPeople' | 'maxNumberOfPeople' | 'from' | 'to' | 'date' | 'time' | 'price' | 'notes'
->;
-
-export type EditJourney = Omit<Journey, 'id' | 'createdAt' | 'user'> & { fullName: string };
-
-export type AddPeopleToBoat = {
-  journeyId: string;
-  people: number;
-  user: User;
-};
-
-export type User = {
-  id: string;
-  name: string;
-  isAnonymous?: boolean | null;
-  email?: string;
-  emailVerified?: boolean;
-};
+export type User = z.infer<typeof userSchema>;
 
 export type Island = {
   id: string;
@@ -128,19 +117,29 @@ export type MessageExtraTypeJourneyRequest = {
   people: number;
 };
 
-export type JourneyRequestAcceptation = {
-  accepted: boolean;
-  requestId: string;
-};
-
 export type MessageType = 'TEXT' | 'JOURNEY_REQUEST' | 'SYSTEM';
 
 export type JourneyRequestStatus = 'PENDING' | 'ACCEPTED' | 'DECLINED';
 
-export type ContactFormMessage = {
-  name: string;
-  email: string;
-  subject?: string;
-  message: string;
-  userId?: string;
+export const schemas = {
+  contactSchema,
+  journeyRequestSchemas,
+  journeySchemas,
+  moderationSchemas,
 };
+
+export type ContactFormBody = z.infer<typeof contactSchema.body>;
+
+export type JourneyRequestAcceptationBody = z.infer<typeof journeyRequestSchemas.journeyRequestAcceptation.body>;
+export type JourneyRequestGet = z.infer<typeof journeyRequestSchemas.journeyRequestGet.params>;
+
+export type AddJourneyBody = z.infer<typeof journeySchemas.addJourney.body>;
+export type EditJourneyBody = z.infer<typeof journeySchemas.editJourney.body>;
+export type EditJourneyParams = z.infer<typeof journeySchemas.editJourney.params>;
+export type DeleteJourneyParams = z.infer<typeof journeySchemas.deleteJourney.params>;
+export type MyJourneysParams = z.infer<typeof journeySchemas.myJourneys.params>;
+export type AddPeopleToJourneyBody = z.infer<typeof journeySchemas.addPeopleToJourney.body>;
+export type AddPeopleToJourneyParams = z.infer<typeof journeySchemas.addPeopleToJourney.params>;
+
+export type BlockUserBody = z.infer<typeof moderationSchemas.blockUser.body>;
+export type ReportUserBody = z.infer<typeof moderationSchemas.reportUser.body>;

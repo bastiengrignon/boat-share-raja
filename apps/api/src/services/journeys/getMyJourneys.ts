@@ -1,9 +1,9 @@
-import type { QueryUserId } from '@boat-share-raja/shared-types';
+import type { MyJourneysParams } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
 
 import { createService } from '../../utils/service';
 
-export const getMyJourneys = createService<{ Params: QueryUserId }, { journeys: Omit<Journey, 'updatedAt'>[] }>(
+export const getMyJourneys = createService<{ Params: MyJourneysParams }, { journeys: Omit<Journey, 'updatedAt'>[] }>(
   'getMyJourneys',
   async (req) => {
     const journeys = await req.prisma.journey.findMany({

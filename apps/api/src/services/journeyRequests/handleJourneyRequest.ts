@@ -1,10 +1,10 @@
-import type { JourneyRequestAcceptation } from '@boat-share-raja/shared-types';
+import type { JourneyRequestAcceptationBody } from '@boat-share-raja/shared-types';
 
 import { AUTOMATED_MESSAGES } from '../../constants';
 import { sendMessageInConversation } from '../../utils/message';
 import { createService } from '../../utils/service';
 
-export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptation }, object>(
+export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptationBody }, object>(
   'handleJourneyRequest',
   async (req) => {
     const { accepted, requestId } = req.body;

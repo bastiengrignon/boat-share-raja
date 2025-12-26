@@ -2,7 +2,7 @@ import type { FastifyInstance } from 'fastify';
 
 const listeners = ['SIGINT', 'SIGTERM'];
 
-export const gracefullyShutdown = async ({ app }: { app: FastifyInstance }) => {
+const gracefullyShutdown = async ({ app }: { app: FastifyInstance }) => {
   process.on('unhandledRejection', (error) => {
     app.log.error(error);
     process.exit(1);
@@ -15,3 +15,5 @@ export const gracefullyShutdown = async ({ app }: { app: FastifyInstance }) => {
     });
   });
 };
+
+export default gracefullyShutdown;

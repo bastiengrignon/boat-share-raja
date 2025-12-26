@@ -1,9 +1,9 @@
-import type { ContactFormMessage } from '@boat-share-raja/shared-types';
+import type { ContactFormBody } from '@boat-share-raja/shared-types';
 
 import { APP_NAME } from '../../constants';
 import { createService } from '../../utils/service';
 
-export const sendEmail = createService<{ Body: ContactFormMessage }, boolean>('sendSupportEmail', async (req) => {
+export const sendEmail = createService<{ Body: ContactFormBody }, boolean>('sendSupportEmail', async (req) => {
   const { userId, name, email, subject, message } = req.body;
   const language = req.language ?? 'en';
 

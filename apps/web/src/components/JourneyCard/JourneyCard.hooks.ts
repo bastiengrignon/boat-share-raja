@@ -1,5 +1,5 @@
-import type { EditJourney, Island, Journey, KeyBoolean } from '@boat-share-raja/shared-types';
-import { hasLength, isNotEmpty, type TransformedValues, useForm } from '@mantine/form';
+import type { EditJourneyBody, Island, Journey, KeyBoolean } from '@boat-share-raja/shared-types';
+import { hasLength, isNotEmpty, useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -60,10 +60,7 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
     },
     transformValues: ({ fullName, ...values }) => ({
       ...values,
-      user: {
-        id: user?.id,
-        name: fullName,
-      },
+      id: journeyEditModalObject?.id,
     }),
   });
 
@@ -139,11 +136,10 @@ export const useJourneyCardHooks = ({ t, journey }: JourneyCardProps) => {
   }, [closeEditJourneyModal]);
 
   const handleSubmitEditJourney = useCallback(
-    (values: TransformedValues<typeof editJourneyForm>) => {
-      if (!journeyEditModalObject?.id) return;
-      updateJourneyMutation({
-        journey: { ...values, id: journeyEditModalObject.id } as unknown as EditJourney & { id: string },
-      });
+    (values: EditJourneyBody) => {
+      if (journeyEditModalObject?.id) {
+        updateJourneyMutation(values);
+      }
     },
     [updateJourneyMutation, journeyEditModalObject?.id]
   );

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import handlebars from 'handlebars';
 import mjml2html from 'mjml';
@@ -34,6 +35,9 @@ export const TEMPLATES_NAME = {
 };
 
 type TemplateName = keyof typeof TEMPLATES_NAME;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const renderMjmlTemplate = (
   templateName: TemplateName,

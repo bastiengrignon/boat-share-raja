@@ -1,13 +1,8 @@
-import { z } from 'zod';
+import type { BlockUserBody } from '@boat-share-raja/shared-types';
 
 import { createService } from '../../utils/service';
 
-const blockBodySchema = z.object({
-  userId: z.string(),
-  blockedUserId: z.string(),
-});
-
-export const blockUser = createService<{ Body: z.infer<typeof blockBodySchema> }, object>('blockUser', async (req) => {
+export const blockUser = createService<{ Body: BlockUserBody }, object>('blockUser', async (req) => {
   const { userId, blockedUserId } = req.body;
 
   if (userId === blockedUserId) {
