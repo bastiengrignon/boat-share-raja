@@ -1,4 +1,4 @@
-import type { AddJourneyBody, Island, Journey } from '@boat-share-raja/shared-types';
+import type { Island, Journey } from '@boat-share-raja/shared-types';
 import { hasLength, isInRange, isNotEmpty, type TransformedValues, useForm } from '@mantine/form';
 import { useDisclosure, useInputState } from '@mantine/hooks';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -37,7 +37,7 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
       to: '',
       numberOfPeople: 2,
       maxNumberOfPeople: 6,
-      date: dayjs().toDate(),
+      date: dayjs().toISOString(),
       time: '',
       price: undefined,
       notes: '',
@@ -57,7 +57,7 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
       ...values,
       user: {
         // biome-ignore lint/style/noNonNullAssertion: user is defined
-        id: user?.id,
+        id: user!.id,
         name: fullName,
       },
     }),
@@ -152,7 +152,10 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
     addJourneyForm.reset();
   }, [closeModalAddJourney]);
 
-  const handleSubmitJourney = useCallback((values: AddJourneyBody) => addJourneyMutation(values), [addJourneyMutation]);
+  const handleSubmitJourney = useCallback(
+    (values: TransformedValues<typeof addJourneyForm>) => addJourneyMutation(values),
+    [addJourneyMutation]
+  );
 
   const handleSubmitAddPeopleToBoat = useCallback(
     (values: TransformedValues<typeof addPeopleToBoatForm>) => {
