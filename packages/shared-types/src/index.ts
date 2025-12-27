@@ -1,6 +1,6 @@
 export type ApiResult<T> = {
-  status: string;
-  error?: string;
+  status: 'SUCCESS' | 'ERROR';
+  error?: string | unknown;
   data: T | null;
 };
 

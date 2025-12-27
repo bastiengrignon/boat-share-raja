@@ -13,6 +13,15 @@ const main = async () => {
     genReqId: () => uuidv4(),
   });
 
+  app.setErrorHandler((error, request, reply) => {
+    request.log.error(error);
+    return reply.status(500).send({
+      status: 'ERROR',
+      error: 'Internal Server Error',
+      data: error,
+    });
+  });
+
   await initRoutes({ app });
 
   try {
