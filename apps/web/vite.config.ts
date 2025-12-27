@@ -1,5 +1,5 @@
 import mdx from '@mdx-js/rollup';
-import react from '@vitejs/plugin-react-swc';
+import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv, type PluginOption } from 'vite';
 import compression from 'vite-plugin-compression2';
 import { VitePWA } from 'vite-plugin-pwa';
@@ -12,11 +12,6 @@ export default defineConfig(({ mode }) => {
     server: {
       host: true,
       allowedHosts,
-    },
-    esbuild: {
-      supported: {
-        'top-level-await': true,
-      },
     },
     build: {
       target: 'es2020',
