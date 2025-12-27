@@ -22,9 +22,19 @@ export default defineConfig(({ mode }) => {
       target: 'es2020',
       rollupOptions: {
         output: {
-          manualChunks: {
-            react: ['react', 'react-dom', 'react-router'],
-            query: ['@tanstack/react-query'],
+          advancedChunks: {
+            groups: [
+              {
+                name: 'react-vendor',
+                test: /node_modules[\\/](react|react-dom|react-router)/,
+                priority: 1,
+              },
+              {
+                name: 'query',
+                test: /node_modules[\\/](@tanstack\/react-query)/,
+                priority: 2,
+              },
+            ],
           },
         },
       },
