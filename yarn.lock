@@ -803,18 +803,18 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.28.5"
 
-"@better-auth/core@1.4.7":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@better-auth/core/-/core-1.4.7.tgz#da4b982e117cf5782573e19236ace734ac77da5f"
-  integrity sha512-rNfj8aNFwPwAMYo+ahoWDsqKrV7svD3jhHSC6+A77xxKodbgV0UgH+RO21GMaZ0PPAibEl851nw5e3bsNslW/w==
+"@better-auth/core@1.4.9":
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/@better-auth/core/-/core-1.4.9.tgz#f29e7794f190ce124cbfff82a0d194c5df1e672a"
+  integrity sha512-JT2q4NDkQzN22KclUEoZ7qU6tl9HUTfK1ctg2oWlT87SEagkwJcnrUwS9VznL+u9ziOIfY27P0f7/jSnmvLcoQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     zod "^4.1.12"
 
-"@better-auth/telemetry@1.4.7":
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/@better-auth/telemetry/-/telemetry-1.4.7.tgz#6b66c345c48d0d0a84ead409f66b110bff6d0146"
-  integrity sha512-k07C/FWnX6m+IxLruNkCweIxuaIwVTB2X40EqwamRVhYNBAhOYZFGLHH+PtQyM+Yf1Z4+8H6MugLOXSreXNAjQ==
+"@better-auth/telemetry@1.4.9":
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/@better-auth/telemetry/-/telemetry-1.4.9.tgz#152ff598267551044dc76cc825e312b4f7fa98d2"
+  integrity sha512-Tthy1/Gmx+pYlbvRQPBTKfVei8+pJwvH1NZp+5SbhwA6K2EXIaoonx/K6N/AXYs2aKUpyR4/gzqDesDjL7zd6A==
   dependencies:
     "@better-auth/utils" "0.3.0"
     "@better-fetch/fetch" "1.1.21"
@@ -1039,10 +1039,10 @@
     ajv-formats "^3.0.1"
     fast-uri "^3.0.0"
 
-"@fastify/compress@^8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@fastify/compress/-/compress-8.3.0.tgz#0cc6033d12d8b1b83007d1cd6e69d958a6793635"
-  integrity sha512-zYp6SCa7nJMxAse8+TXWNF0l0xV9K9GeMFwdr0aESAKfCEGo7N96b5vjFDFEz/pg8eyo1Am1B249UX79mS3x9A==
+"@fastify/compress@^8.3.1":
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@fastify/compress/-/compress-8.3.1.tgz#69b209e744bc371d1b7c2e69b2d6c01b7e1908a1"
+  integrity sha512-BUpItLr6MUX9e9ukg5Y6xekyA/7pBFG8QWtFCrUDm9ctoBc3R2/nA16yOaOWtVoccpXGjdDEYA/MxAb5+8cxag==
   dependencies:
     "@fastify/accept-negotiator" "^2.0.0"
     fastify-plugin "^5.0.0"
@@ -2096,28 +2096,28 @@ better-auth-localization@^2.2.2:
   resolved "https://registry.yarnpkg.com/better-auth-localization/-/better-auth-localization-2.2.2.tgz#a22854fc8cee3ffcd31c659e5e93b74534fcba40"
   integrity sha512-5LtL1AO1H78Lwium13k7A84GJNhV4cl0k/GFR49MR1mkwug+X4ac8j2aHmjx5+1Z3bsEtYv0bWQRk2zQTpvHOQ==
 
-better-auth@^1.4.7:
-  version "1.4.7"
-  resolved "https://registry.yarnpkg.com/better-auth/-/better-auth-1.4.7.tgz#21e31e50fb0541759b6e92940a4d60f337f3d403"
-  integrity sha512-kVmDQxzqGwP4FFMOYpS5I7oAaoFW3hwooUAAtcbb2DrOYv5EUvRUDJbTMaPoMTj7URjNDQ6vG9gcCS1Q+0aVBw==
+better-auth@^1.4.9:
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/better-auth/-/better-auth-1.4.9.tgz#8b5ffebd55a20d90cae9a4efbf0b4fab878eb7c4"
+  integrity sha512-usSdjuyTzZwIvM8fjF8YGhPncxV3MAg3dHUO9uPUnf0yklXUSYISiH1+imk6/Z+UBqsscyyPRnbIyjyK97p7YA==
   dependencies:
-    "@better-auth/core" "1.4.7"
-    "@better-auth/telemetry" "1.4.7"
+    "@better-auth/core" "1.4.9"
+    "@better-auth/telemetry" "1.4.9"
     "@better-auth/utils" "0.3.0"
     "@better-fetch/fetch" "1.1.21"
     "@noble/ciphers" "^2.0.0"
     "@noble/hashes" "^2.0.0"
-    better-call "1.1.5"
+    better-call "1.1.7"
     defu "^6.1.4"
     jose "^6.1.0"
     kysely "^0.28.5"
     nanostores "^1.0.1"
     zod "^4.1.12"
 
-better-call@1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/better-call/-/better-call-1.1.5.tgz#c97c077574da3cca0ef11ad1afed4f5fb86c0bf0"
-  integrity sha512-nQJ3S87v6wApbDwbZ++FrQiSiVxWvZdjaO+2v6lZJAG2WWggkB2CziUDjPciz3eAt9TqfRursIQMZIcpkBnvlw==
+better-call@1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/better-call/-/better-call-1.1.7.tgz#87aa2d04e61ca7c27452e764ec839009eead5520"
+  integrity sha512-6gaJe1bBIEgVebQu/7q9saahVzvBsGaByEnE8aDVncZEDiJO7sdNB28ot9I6iXSbR25egGmmZ6aIURXyQHRraQ==
   dependencies:
     "@better-auth/utils" "^0.3.0"
     "@better-fetch/fetch" "^1.1.4"
@@ -5632,13 +5632,14 @@ react-dom@^19.2.3:
   dependencies:
     scheduler "^0.27.0"
 
-react-i18next@^15.7.4:
-  version "15.7.4"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.7.4.tgz#146e50f220d204b842e22c75d1a3d23c6c589a30"
-  integrity sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw==
+react-i18next@^16.5.0:
+  version "16.5.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-16.5.0.tgz#107e4323742344a2f8792feb905cea551da6fd2c"
+  integrity sha512-IMpPTyCTKxEj8klCrLKUTIUa8uYTd851+jcu2fJuUB9Agkk9Qq8asw4omyeHVnOXHrLgQJGTm5zTvn8HpaPiqw==
   dependencies:
     "@babel/runtime" "^7.27.6"
     html-parse-stringify "^3.0.1"
+    use-sync-external-store "^1.6.0"
 
 react-icons@^5.5.0:
   version "5.5.0"
@@ -6682,47 +6683,47 @@ tsx@^4.21.0:
   optionalDependencies:
     fsevents "~2.3.3"
 
-turbo-darwin-64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-2.6.3.tgz#8b2e734b0bfb5626c3fb611d812e0ceba6534033"
-  integrity sha512-BlJJDc1CQ7SK5Y5qnl7AzpkvKSnpkfPmnA+HeU/sgny3oHZckPV2776ebO2M33CYDSor7+8HQwaodY++IINhYg==
+turbo-darwin-64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-64/-/turbo-darwin-64-2.7.2.tgz#bc7c7a4f519e9e5442f369d32bdc896c5fa1aa8f"
+  integrity sha512-dxY3X6ezcT5vm3coK6VGixbrhplbQMwgNsCsvZamS/+/6JiebqW9DKt4NwpgYXhDY2HdH00I7FWs3wkVuan4rA==
 
-turbo-darwin-arm64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-2.6.3.tgz#6b21ec562ac4c08e81f3c6fb15c6caa0e4340470"
-  integrity sha512-MwVt7rBKiOK7zdYerenfCRTypefw4kZCue35IJga9CH1+S50+KTiCkT6LBqo0hHeoH2iKuI0ldTF2a0aB72z3w==
+turbo-darwin-arm64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-darwin-arm64/-/turbo-darwin-arm64-2.7.2.tgz#2cbe37dc9eab8e306d0579fbc9d5c73866ba9ddd"
+  integrity sha512-1bXmuwPLqNFt3mzrtYcVx1sdJ8UYb124Bf48nIgcpMCGZy3kDhgxNv1503kmuK/37OGOZbsWSQFU4I08feIuSg==
 
-turbo-linux-64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-2.6.3.tgz#ffc129da804939596b6396de9124e0577909101a"
-  integrity sha512-cqpcw+dXxbnPtNnzeeSyWprjmuFVpHJqKcs7Jym5oXlu/ZcovEASUIUZVN3OGEM6Y/OTyyw0z09tOHNt5yBAVg==
+turbo-linux-64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-linux-64/-/turbo-linux-64-2.7.2.tgz#6e95e3b279c12b29cf47f12772e2de43123f13cf"
+  integrity sha512-kP+TiiMaiPugbRlv57VGLfcjFNsFbo8H64wMBCPV2270Or2TpDCBULMzZrvEsvWFjT3pBFvToYbdp8/Kw0jAQg==
 
-turbo-linux-arm64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-2.6.3.tgz#3518eef70e815a3ee87c15fc2e7e99f2bf051f35"
-  integrity sha512-MterpZQmjXyr4uM7zOgFSFL3oRdNKeflY7nsjxJb2TklsYqiu3Z9pQ4zRVFFH8n0mLGna7MbQMZuKoWqqHb45w==
+turbo-linux-arm64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-linux-arm64/-/turbo-linux-arm64-2.7.2.tgz#e7ffd7a6aead5a7e765b838a1a62ba77404a6725"
+  integrity sha512-VDJwQ0+8zjAfbyY6boNaWfP6RIez4ypKHxwkuB6SrWbOSk+vxTyW5/hEjytTwK8w/TsbKVcMDyvpora8tEsRFw==
 
-turbo-windows-64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-2.6.3.tgz#c4f19647e2def14d476d696bc465f88d4b9e4beb"
-  integrity sha512-biDU70v9dLwnBdLf+daoDlNJVvqOOP8YEjqNipBHzgclbQlXbsi6Gqqelp5er81Qo3BiRgmTNx79oaZQTPb07Q==
+turbo-windows-64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-windows-64/-/turbo-windows-64-2.7.2.tgz#f1f53995fa495a7b8a26d1f44574d6962baedbec"
+  integrity sha512-rPjqQXVnI6A6oxgzNEE8DNb6Vdj2Wwyhfv3oDc+YM3U9P7CAcBIlKv/868mKl4vsBtz4ouWpTQNXG8vljgJO+w==
 
-turbo-windows-arm64@2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-2.6.3.tgz#d071b628b7682556b6b7a194658975d5f9fe5f1c"
-  integrity sha512-dDHVKpSeukah3VsI/xMEKeTnV9V9cjlpFSUs4bmsUiLu3Yv2ENlgVEZv65wxbeE0bh0jjpmElDT+P1KaCxArQQ==
+turbo-windows-arm64@2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo-windows-arm64/-/turbo-windows-arm64-2.7.2.tgz#1669cfd98cfa8f0373e136c40b0d3adf26b459f7"
+  integrity sha512-tcnHvBhO515OheIFWdxA+qUvZzNqqcHbLVFc1+n+TJ1rrp8prYicQtbtmsiKgMvr/54jb9jOabU62URAobnB7g==
 
-turbo@^2.6.3:
-  version "2.6.3"
-  resolved "https://registry.yarnpkg.com/turbo/-/turbo-2.6.3.tgz#bdde1eb3c1a3076b91eaef5fec98d63400609f15"
-  integrity sha512-bf6YKUv11l5Xfcmg76PyWoy/e2vbkkxFNBGJSnfdSXQC33ZiUfutYh6IXidc5MhsnrFkWfdNNLyaRk+kHMLlwA==
+turbo@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/turbo/-/turbo-2.7.2.tgz#db40b992d8524cbe476faca2f94306fbdeacf228"
+  integrity sha512-5JIA5aYBAJSAhrhbyag1ZuMSgUZnHtI+Sq3H8D3an4fL8PeF+L1yYvbEJg47akP1PFfATMf5ehkqFnxfkmuwZQ==
   optionalDependencies:
-    turbo-darwin-64 "2.6.3"
-    turbo-darwin-arm64 "2.6.3"
-    turbo-linux-64 "2.6.3"
-    turbo-linux-arm64 "2.6.3"
-    turbo-windows-64 "2.6.3"
-    turbo-windows-arm64 "2.6.3"
+    turbo-darwin-64 "2.7.2"
+    turbo-darwin-arm64 "2.7.2"
+    turbo-linux-64 "2.7.2"
+    turbo-linux-arm64 "2.7.2"
+    turbo-windows-64 "2.7.2"
+    turbo-windows-arm64 "2.7.2"
 
 type-fest@^0.16.0:
   version "0.16.0"
@@ -6784,7 +6785,7 @@ typed-array-length@^1.0.7:
     possible-typed-array-names "^1.0.0"
     reflect.getprototypeof "^1.0.6"
 
-typescript@^5.9.3, typescript@latest, typescript@~5.9.3:
+typescript@^5.9.3, typescript@~5.9.3:
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.9.3.tgz#5b4f59e15310ab17a216f5d6cf53ee476ede670f"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==
@@ -6980,6 +6981,11 @@ use-sidecar@^1.1.3:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
 
+use-sync-external-store@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
+  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
+
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
@@ -7045,10 +7051,10 @@ vite-plugin-pwa@^1.2.0:
     workbox-build "^7.4.0"
     workbox-window "^7.4.0"
 
-vite-tsconfig-paths@^5.1.4:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/vite-tsconfig-paths/-/vite-tsconfig-paths-5.1.4.tgz#d9a71106a7ff2c1c840c6f1708042f76a9212ed4"
-  integrity sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==
+vite-tsconfig-paths@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/vite-tsconfig-paths/-/vite-tsconfig-paths-6.0.3.tgz#df8c11b56a6247707e76b472af084fc6e5e68c35"
+  integrity sha512-7bL7FPX/DSviaZGYUKowWF1AiDVWjMjxNbE8lyaVGDezkedWqfGhlnQ4BZXre0ZN5P4kAgIJfAlgFDVyjrCIyg==
   dependencies:
     debug "^4.1.1"
     globrex "^0.1.2"

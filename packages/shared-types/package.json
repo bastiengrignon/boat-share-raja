@@ -21,10 +21,10 @@
   "private": true,
   "devDependencies": {
     "@boat-share-raja/typescript-config": "*",
-    "typescript": "latest"
+    "typescript": "^5.9.3"
   },
   "volta": {
-    "node": "22.18.0",
+    "node": "22.21.1",
     "yarn": "1.22.22"
   }
 }
