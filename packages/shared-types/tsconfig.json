@@ -2,7 +2,9 @@
   "extends": "@boat-share-raja/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "module": "ESNext",
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

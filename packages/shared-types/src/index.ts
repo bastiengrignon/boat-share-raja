@@ -1,3 +1,5 @@
+import { contactSchema } from './contact';
+
 export type ApiResult<T> = {
   status: 'SUCCESS' | 'ERROR';
   error?: string | unknown;
@@ -143,4 +145,8 @@ export type ContactFormMessage = {
   subject?: string;
   message: string;
   userId?: string;
+};
+
+export const schemas = {
+  contactSchema,
 };

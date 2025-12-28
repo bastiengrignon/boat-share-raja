@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { v4 as uuidv4 } from 'uuid';
 
+import { errorHandler, serializerCompiler, zodValidatorCompiler } from './middlewares/errors';
 import { gracefullyShutdown } from './middlewares/shutdown';
 import { initRoutes } from './router';
 import serverConfig from './utils/config';
@@ -13,14 +14,9 @@ const main = async () => {
     genReqId: () => uuidv4(),
   });
 
-  app.setErrorHandler((error, request, reply) => {
-    request.log.error(error);
-    return reply.status(500).send({
-      status: 'ERROR',
-      error: 'Internal Server Error',
-      data: error,
-    });
-  });
+  app.setErrorHandler(errorHandler);
+  app.setValidatorCompiler(zodValidatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
 
   await initRoutes({ app });
 
