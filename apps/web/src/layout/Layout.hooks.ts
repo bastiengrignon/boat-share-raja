@@ -1,6 +1,8 @@
+import type { ApiResult } from '@boat-share-raja/shared-types';
 import { isEmail, isNotEmpty, type TransformedValues, useForm } from '@mantine/form';
 import { useDisclosure, useWindowEvent } from '@mantine/hooks';
 import { useMutation } from '@tanstack/react-query';
+import type { AxiosError } from 'axios';
 import type { TFunction } from 'i18next';
 import { useCallback, useMemo, useRef } from 'react';
 import { matchPath, useLocation } from 'react-router';
@@ -72,7 +74,9 @@ export const useFooterHooks = ({ t }: FooterHooksInputProps) => {
       closeContactModal();
       contactUsForm.reset();
     },
-    onError: () => contactUsForm.setFieldError('message', t('errorOccurred')),
+    onError: (error: AxiosError<ApiResult<object>>) => {
+      contactUsForm.setFieldError('message', error.response?.data?.error?.toString() || t('errorOccurred'));
+    },
   });
 
   const handleSubmitContact = useCallback(
