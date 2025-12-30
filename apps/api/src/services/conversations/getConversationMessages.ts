@@ -1,11 +1,11 @@
 import type { QueryConversationId } from '@boat-share-raja/shared-types';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getConversationMessages = createService<
   { Params: QueryConversationId; Querystring: { cursor?: string; take?: string } },
   object
->('getConversationMessages', async (req) => {
+>('getConversationMessages', async (req, rep) => {
   const { conversationId } = req.params;
   const take = req.query.take ? Number(req.query.take) : 20;
   const cursor = req.query.cursor;
@@ -29,12 +29,12 @@ export const getConversationMessages = createService<
   }
   const nextCursor = hasMore ? messages[messages.length - 1]?.id : null;
 
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: {
       messages,
       nextCursor,
       hasMore,
     },
-  };
+  });
 });

@@ -20,11 +20,11 @@ export const createService =
       return result;
     } catch (error) {
       req.log.error(`Something went terribly wrong while requesting ${serviceName} -> ${error}`);
-      return {
+      return returnService(res, {
         status: 'ERROR',
         error: 'INTERNAL_SERVER_ERROR',
         data: null,
-      };
+      });
     }
   };
 

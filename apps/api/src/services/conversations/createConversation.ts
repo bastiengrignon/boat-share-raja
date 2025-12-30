@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 const createConversationBodySchema = z.object({
   title: z.string().optional(),
@@ -10,14 +10,14 @@ const createConversationBodySchema = z.object({
 
 export const createConversation = createService<{ Body: z.infer<typeof createConversationBodySchema> }, object>(
   'createConversation',
-  async (req) => {
+  async (req, rep) => {
     const parseBody = createConversationBodySchema.safeParse(req.body);
     if (!parseBody.success) {
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: parseBody.error.message,
         data: null,
-      };
+      });
     }
     const { title, isGroup, participantIds } = parseBody.data;
 
@@ -41,11 +41,11 @@ export const createConversation = createService<{ Body: z.infer<typeof createCon
         },
       });
       if (existingConversation) {
-        return {
+        return returnService(rep, {
           status: 'ERROR',
           error: 'CONVERSATION_ALREADY_EXITS',
           data: null,
-        };
+        });
       }
     }
 
@@ -66,11 +66,11 @@ export const createConversation = createService<{ Body: z.infer<typeof createCon
       },
     });
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         conversation,
       },
-    };
+    });
   }
 );

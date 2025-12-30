@@ -1,7 +1,7 @@
 import type { QueryConversationId } from '@boat-share-raja/shared-types';
 import { z } from 'zod';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 const markConversationAsReadBodySchema = z.object({
   userId: z.uuid(),
@@ -10,16 +10,16 @@ const markConversationAsReadBodySchema = z.object({
 export const markConversationAsRead = createService<
   { Params: QueryConversationId; Body: z.infer<typeof markConversationAsReadBodySchema> },
   { updated: number }
->('markConversationAsRead', async (req) => {
+>('markConversationAsRead', async (req, rep) => {
   const { conversationId } = req.params;
   const parseResult = markConversationAsReadBodySchema.safeParse(req.body);
 
   if (!parseResult.success) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: parseResult.error.message,
       data: null,
-    };
+    });
   }
   const { userId } = parseResult.data;
 
@@ -27,11 +27,11 @@ export const markConversationAsRead = createService<
     where: { conversationId, userId },
   });
   if (!participant) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'NOT_IN_CONVERSATION',
       data: null,
-    };
+    });
   }
 
   const unreadMessages = await req.prisma.message.findMany({
@@ -49,10 +49,10 @@ export const markConversationAsRead = createService<
     },
   });
   if (unreadMessages.length === 0) {
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: { updated: 0 },
-    };
+    });
   }
 
   await req.prisma.messageRead.createMany({
@@ -64,8 +64,8 @@ export const markConversationAsRead = createService<
     skipDuplicates: true,
   });
 
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: { updated: unreadMessages.length },
-  };
+  });
 });

@@ -1,8 +1,8 @@
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const checkOrCreateConversation = createService<{ Body: { userIdA: string; userIdB: string } }, string>(
   'checkOrCreateConversation',
-  async (req) => {
+  async (req, rep) => {
     const { userIdA, userIdB } = req.body;
 
     const existingConversation = await req.prisma.conversation.findFirst({
@@ -16,10 +16,10 @@ export const checkOrCreateConversation = createService<{ Body: { userIdA: string
     });
     if (existingConversation) {
       req.log.info('Conversation found, returning already created conversation');
-      return {
+      return returnService(rep, {
         status: 'SUCCESS',
         data: existingConversation.id,
-      };
+      });
     }
 
     const createdConversation = await req.prisma.conversation.create({
@@ -34,9 +34,9 @@ export const checkOrCreateConversation = createService<{ Body: { userIdA: string
     });
     req.log.info('Conversation created, returning newly created conversation');
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: createdConversation.id,
-    };
+    });
   }
 );

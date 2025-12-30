@@ -1,7 +1,7 @@
 import { sendMessageInConversation } from '../../utils/message';
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
-export const deleteJourney = createService<{ Params: { id: string } }, object>('deleteJourney', async (req) => {
+export const deleteJourney = createService<{ Params: { id: string } }, object>('deleteJourney', async (req, rep) => {
   const { id: journeyId } = req.params;
 
   const journeyToDelete = await req.prisma.journey.findFirst({
@@ -25,11 +25,11 @@ export const deleteJourney = createService<{ Params: { id: string } }, object>('
     },
   });
   if (!journeyToDelete) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'JOURNEY_NOT_FOUND',
       data: null,
-    };
+    });
   }
 
   const authorId = journeyToDelete.user.id;
@@ -84,8 +84,8 @@ export const deleteJourney = createService<{ Params: { id: string } }, object>('
     },
   });
 
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: null,
-  };
+  });
 });

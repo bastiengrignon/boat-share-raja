@@ -2,11 +2,11 @@ import type { EditJourney } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const updateJourney = createService<{ Body: EditJourney; Params: { id: string } }, Omit<Journey, 'updatedAt'>>(
   'updateJourney',
-  async (req) => {
+  async (req, rep) => {
     const body = req.body;
     const updatedJourney = await req.prisma.journey.update({
       where: {
@@ -27,9 +27,9 @@ export const updateJourney = createService<{ Body: EditJourney; Params: { id: st
       },
     });
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: updatedJourney,
-    };
+    });
   }
 );

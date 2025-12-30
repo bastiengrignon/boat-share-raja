@@ -1,11 +1,11 @@
 import type { QueryUserId } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getMyJourneys = createService<{ Params: QueryUserId }, { journeys: Omit<Journey, 'updatedAt'>[] }>(
   'getMyJourneys',
-  async (req) => {
+  async (req, rep) => {
     const journeys = await req.prisma.journey.findMany({
       where: {
         userId: req.params.userId,
@@ -24,11 +24,11 @@ export const getMyJourneys = createService<{ Params: QueryUserId }, { journeys: 
       journeyRequest: JourneyRequest,
     }));
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         journeys: formattedJourneys,
       },
-    };
+    });
   }
 );

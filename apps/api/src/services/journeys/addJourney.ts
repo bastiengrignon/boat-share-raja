@@ -2,11 +2,11 @@ import type { CreateJourney } from '@boat-share-raja/shared-types';
 import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const addJourney = createService<{ Body: CreateJourney }, Omit<Journey, 'updatedAt'>>(
   'addJourney',
-  async (req) => {
+  async (req, rep) => {
     const body = req.body;
     const newJourney = await req.prisma.journey.create({
       data: {
@@ -35,9 +35,9 @@ export const addJourney = createService<{ Body: CreateJourney }, Omit<Journey, '
       },
     });
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: newJourney,
-    };
+    });
   }
 );

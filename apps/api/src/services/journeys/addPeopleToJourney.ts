@@ -2,11 +2,11 @@ import type { AddPeopleToBoat, QueryId } from '@boat-share-raja/shared-types';
 
 import { AUTOMATED_MESSAGES } from '../../constants';
 import { sendMessageInConversation } from '../../utils/message';
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const addPeopleToJourney = createService<{ Body: AddPeopleToBoat; Params: QueryId }, { journeyId: string }>(
   'addPeopleToJourney',
-  async (req) => {
+  async (req, rep) => {
     const { user: requesterPayload, people } = req.body;
     const { id: journeyId } = req.params;
 
@@ -40,11 +40,11 @@ export const addPeopleToJourney = createService<{ Body: AddPeopleToBoat; Params:
 
     if (!journeyAuthor) {
       req.log.error('Author not found for the selected journey');
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'AUTHOR_NOT_FOUND',
         data: null,
-      };
+      });
     }
 
     const journeyRequest = await req.prisma.journeyRequest.create({
@@ -99,11 +99,11 @@ export const addPeopleToJourney = createService<{ Body: AddPeopleToBoat; Params:
       type: 'JOURNEY_REQUEST',
     });
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         journeyId,
       },
-    };
+    });
   }
 );

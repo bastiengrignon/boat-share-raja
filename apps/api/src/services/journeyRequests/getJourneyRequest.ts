@@ -1,8 +1,8 @@
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getJourneyRequest = createService<{ Params: { requestId: string } }, object>(
   'getJourneyRequest',
-  async (req) => {
+  async (req, rep) => {
     const { requestId } = req.params;
     const journeyRequest = await req.prisma.journeyRequest.findFirst({
       where: {
@@ -13,18 +13,18 @@ export const getJourneyRequest = createService<{ Params: { requestId: string } }
       },
     });
     if (!journeyRequest) {
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'REQUEST_NOT_FOUND',
         data: null,
-      };
+      });
     }
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         journeyRequest,
       },
-    };
+    });
   }
 );

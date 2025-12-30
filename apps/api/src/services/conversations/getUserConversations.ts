@@ -1,10 +1,10 @@
 import type { QueryUserId } from '@boat-share-raja/shared-types';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getUserConversations = createService<{ Params: QueryUserId }, { conversations: object }>(
   'getUserConversations',
-  async (req) => {
+  async (req, rep) => {
     const { userId } = req.params;
     const archivedConversations = await req.prisma.archiveConversation.findMany({
       where: { userId },
@@ -71,11 +71,11 @@ export const getUserConversations = createService<{ Params: QueryUserId }, { con
       })
     );
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         conversations: conversationsWithUnread,
       },
-    };
+    });
   }
 );

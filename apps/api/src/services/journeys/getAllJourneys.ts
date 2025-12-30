@@ -1,11 +1,11 @@
 import type { Journey } from '@prisma/client';
 import dayjs from 'dayjs';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getAllJourneys = createService<object, { journeys: Omit<Journey, 'updatedAt'>[] }>(
   'getAllJourneys',
-  async (req) => {
+  async (req, rep) => {
     const journeys = await req.prisma.journey.findMany({
       where: {
         date: {
@@ -29,11 +29,11 @@ export const getAllJourneys = createService<object, { journeys: Omit<Journey, 'u
       journeyRequest: JourneyRequest,
     }));
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         journeys: formattedJourneys,
       },
-    };
+    });
   }
 );

@@ -2,7 +2,7 @@ import type { QueryConversationId } from '@boat-share-raja/shared-types';
 import dayjs from 'dayjs';
 import { z } from 'zod';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 const archiveConversationBodySchema = z.object({
   userId: z.string(),
@@ -14,7 +14,7 @@ export const archiveConversation = createService<
     Body: z.infer<typeof archiveConversationBodySchema>;
   },
   { archivedConversations: object }
->('archiveConversation', async (req) => {
+>('archiveConversation', async (req, rep) => {
   const { conversationId } = req.params;
   const { userId } = req.body;
 
@@ -29,20 +29,20 @@ export const archiveConversation = createService<
     },
   });
   if (!conversation) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'CONVERSATION_NOT_FOUND',
       data: null,
-    };
+    });
   }
 
   const otherUserId = conversation.participants.find((p) => p.userId !== userId)?.userId;
   if (!otherUserId) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'USER_RECEIVER_NOT_FOUND',
       data: null,
-    };
+    });
   }
 
   const archivedConversations = await req.prisma.archiveConversation.upsert({
@@ -51,8 +51,8 @@ export const archiveConversation = createService<
     create: { userId: userId, otherUserId },
   });
 
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: { archivedConversations },
-  };
+  });
 });

@@ -2,11 +2,11 @@ import type { JourneyRequestAcceptation } from '@boat-share-raja/shared-types';
 
 import { AUTOMATED_MESSAGES } from '../../constants';
 import { sendMessageInConversation } from '../../utils/message';
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptation }, object>(
   'handleJourneyRequest',
-  async (req) => {
+  async (req, rep) => {
     const { accepted, requestId } = req.body;
 
     const journeyRequest = await req.prisma.journeyRequest.findFirst({
@@ -26,11 +26,11 @@ export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptat
     });
     if (!journeyRequest) {
       req.log.error('Journey request not found for the given id');
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'REQUEST_NOT_FOUND',
         data: null,
-      };
+      });
     }
 
     await req.prisma.journeyRequest.update({
@@ -64,11 +64,11 @@ export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptat
     });
     if (!conversation) {
       req.log.error('Conversation not found for the request');
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'CONVERSATION_NOT_FOUND',
         data: null,
-      };
+      });
     }
 
     await sendMessageInConversation(req.prisma)({
@@ -93,9 +93,9 @@ export const handleJourneyRequest = createService<{ Body: JourneyRequestAcceptat
       });
     }
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: null,
-    };
+    });
   }
 );

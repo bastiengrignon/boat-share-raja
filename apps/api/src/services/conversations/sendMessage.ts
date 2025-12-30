@@ -3,7 +3,7 @@ import type { Message } from '@prisma/client';
 import { z } from 'zod';
 
 import { sendMessageInConversation } from '../../utils/message';
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 const sendMessageBodySchema = z.object({
   senderId: z.uuid(),
@@ -15,16 +15,16 @@ const sendMessageBodySchema = z.object({
 export const sendMessage = createService<
   { Params: QueryConversationId; Body: z.infer<typeof sendMessageBodySchema> },
   { message: Message }
->('sendMessage', async (req) => {
+>('sendMessage', async (req, rep) => {
   const { conversationId } = req.params;
   const parseResult = sendMessageBodySchema.safeParse(req.body);
 
   if (!parseResult.success) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: parseResult.error.message,
       data: null,
-    };
+    });
   }
   const { senderId, content, extra } = parseResult.data;
 
@@ -32,30 +32,30 @@ export const sendMessage = createService<
     where: { id: conversationId },
   });
   if (!conversationExists) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'CONVERSATION_NOT_FOUND',
       data: null,
-    };
+    });
   }
 
   const participant = await req.prisma.conversationParticipant.findFirst({
     where: { conversationId, userId: senderId },
   });
   if (!participant) {
-    return {
+    return returnService(rep, {
       status: 'ERROR',
       error: 'NOT_IN_CONVERSATION',
       data: null,
-    };
+    });
   }
 
   const message = await sendMessageInConversation(req.prisma)({ conversationId, senderId, content, extra });
 
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: {
       message,
     },
-  };
+  });
 });

@@ -1,10 +1,10 @@
 import type { QueryConversationId } from '@boat-share-raja/shared-types';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 export const getConversation = createService<{ Params: QueryConversationId }, object>(
   'getConversation',
-  async (req) => {
+  async (req, rep) => {
     const conversation = await req.prisma.conversation.findFirst({
       where: {
         id: req.params.conversationId,
@@ -18,18 +18,18 @@ export const getConversation = createService<{ Params: QueryConversationId }, ob
       },
     });
     if (!conversation) {
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'CONVERSATION_NOT_FOUND',
         data: null,
-      };
+      });
     }
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: {
         conversation,
       },
-    };
+    });
   }
 );

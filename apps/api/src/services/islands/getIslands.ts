@@ -1,18 +1,18 @@
 import type { RouteGenericInterface } from 'fastify';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
-export const getIslands = createService<RouteGenericInterface, { islands: object }>('getIslands', async (req) => {
+export const getIslands = createService<RouteGenericInterface, { islands: object }>('getIslands', async (req, rep) => {
   const islands = await req.prisma.island.findMany({
     select: {
       id: true,
       name: true,
     },
   });
-  return {
+  return returnService(rep, {
     status: 'SUCCESS',
     data: {
       islands,
     },
-  };
+  });
 });
