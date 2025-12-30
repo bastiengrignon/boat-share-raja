@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 
+import { schemas } from '../../constants/schemas';
 import { archiveConversation } from '../../services/conversations/archiveConversation';
 import { checkOrCreateConversation } from '../../services/conversations/checkOrCreateConversation';
 import { createConversation } from '../../services/conversations/createConversation';
@@ -12,14 +13,22 @@ import { markConversationAsRead } from '../../services/conversations/markConvers
 import { sendMessage } from '../../services/conversations/sendMessage';
 
 export const conversationsRoutes = (app: FastifyInstance) => {
-  app.post('', createConversation);
-  app.put('', checkOrCreateConversation);
-  app.get('/:userId', getUserConversations);
-  app.get('/:conversationId/information', getConversation);
-  app.get('/:conversationId/messages', getConversationMessages);
-  app.post('/:conversationId/messages', sendMessage);
-  app.post('/:conversationId/read', markConversationAsRead);
-  app.post('/:conversationId/archive', archiveConversation);
-  app.get('/:userId/archive', getArchivedConversations);
-  app.get('/:userId/unread', getUnreadMessages);
+  app.post('', { schema: schemas.conversationSchema.createConversation }, createConversation);
+  app.put('', { schema: schemas.conversationSchema.checkOrCreateConversation }, checkOrCreateConversation);
+  app.get('/:userId', { schema: schemas.conversationSchema.getUserConversations }, getUserConversations);
+  app.get('/:conversationId/information', { schema: schemas.conversationSchema.getConversation }, getConversation);
+  app.get(
+    '/:conversationId/messages',
+    { schema: schemas.conversationSchema.getConversationMessages },
+    getConversationMessages
+  );
+  app.post('/:conversationId/messages', { schema: schemas.conversationSchema.sendMessage }, sendMessage);
+  app.post('/:conversationId/read', { schema: schemas.conversationSchema.markAsRead }, markConversationAsRead);
+  app.post('/:conversationId/archive', { schema: schemas.conversationSchema.archiveConversation }, archiveConversation);
+  app.get(
+    '/:userId/archive',
+    { schema: schemas.conversationSchema.getArchivedConversations },
+    getArchivedConversations
+  );
+  app.get('/:userId/unread', { schema: schemas.conversationSchema.getUnreadMessages }, getUnreadMessages);
 };

@@ -1,20 +1,10 @@
 import type { FastifyInstance } from 'fastify';
 
-const healthcheckGetSchema = {
-  response: {
-    200: {
-      type: 'object',
-      properties: {
-        status: { type: 'string' },
-        message: { type: 'string' },
-      },
-    },
-  },
-};
+import { schemas } from '../../constants/schemas';
 
 export const healthcheckRoutes = (app: FastifyInstance) => {
-  app.get('', { schema: healthcheckGetSchema }, () => ({
-    status: 'OK',
+  app.get('', { schema: schemas.healthcheckSchemas.healthcheck }, () => ({
+    status: 'SUCCESS',
     message: 'API is healthy',
   }));
 };

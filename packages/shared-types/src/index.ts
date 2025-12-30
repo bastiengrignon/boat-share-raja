@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 export type ApiResult<T> = {
   status: 'SUCCESS' | 'ERROR';
   error?: string | unknown;
@@ -145,22 +143,4 @@ export type ContactFormMessage = {
   subject?: string;
   message: string;
   userId?: string;
-};
-
-const contactBodySchema = z.object({
-  name: z.string().min(1),
-  email: z.email(),
-  subject: z.string().optional(),
-  message: z.string().min(1),
-  userId: z.string().optional(),
-});
-
-const contactSchema = {
-  sendSupport: {
-    body: contactBodySchema,
-  },
-};
-
-export const schemas = {
-  contactSchema,
 };
