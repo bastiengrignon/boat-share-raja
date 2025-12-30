@@ -3,45 +3,51 @@ import {
   Autocomplete,
   Box,
   Button,
+  Center,
+  CloseIcon,
   Flex,
   Group,
-  Input,
   LoadingOverlay,
   Modal,
   NumberInput,
+  Paper,
   Stack,
   Text,
   Textarea,
   TextInput,
   Title,
-  Tooltip,
 } from '@mantine/core';
 import { DatePickerInput, TimePicker } from '@mantine/dates';
 import dayjs from 'dayjs';
 import type { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import { TbCalendar, TbClock, TbCurrencyDollar, TbFilter, TbMapPin, TbPlus, TbSearch } from 'react-icons/tb';
+import { Trans, useTranslation } from 'react-i18next';
+import { TbCalendar, TbClock, TbCurrencyDollar, TbFilter, TbMapPin, TbPlus } from 'react-icons/tb';
 
 import JourneyCard from '../../components/JourneyCard';
+import JourneyFilters from '../../components/JourneyFilters';
 import Loader from '../../components/Loader';
 import { DATE_READABLE_SHORT_FORMAT } from '../../constants/string';
 import { useHomeHooks } from './Home.hooks';
+import classes from './Home.module.css';
 
 const Home: FC = () => {
   const { t } = useTranslation('home');
   const {
-    search,
+    heroDisplay,
     openedModalAddJourney,
     openedModalAddPeopleToJourney,
     addJourneyForm,
     addPeopleToBoatForm,
     formattedJourneys,
     formattedIslands,
+    openedFilters,
     allJourneyLoading,
     allIslandsLoading,
     addJourneyLoading,
     addPeopleToBoatLoading,
-    setSearch,
+    openFilters,
+    closeFilters,
+    setHeroDisplay,
     openModalAddJourney,
     handleSubmitJourney,
     handleCloseModal,
@@ -51,6 +57,27 @@ const Home: FC = () => {
   } = useHomeHooks({ t });
   return (
     <Stack>
+      {heroDisplay && (
+        <Paper p="xs" className={classes.backgroundHero}>
+          <Stack gap="xs">
+            <Flex align="center" justify="space-between">
+              <div />
+              <Title order={4}>{t('hero.title')}</Title>
+              <ActionIcon variant="light" size="xs" onClick={() => setHeroDisplay(false)}>
+                <CloseIcon />
+              </ActionIcon>
+            </Flex>
+            <Text size="sm" p="sm">
+              <Trans
+                i18nKey="home:hero.text"
+                components={{
+                  text: <Text td="underline" fs="italic" component="span" />,
+                }}
+              />
+            </Text>
+          </Stack>
+        </Paper>
+      )}
       <Flex direction={{ base: 'column', sm: 'row' }} justify={{ base: 'center', sm: 'space-between' }} gap="sm">
         <Button rightSection={<TbPlus />} onClick={openModalAddJourney}>
           {t('addJourney')}
@@ -60,17 +87,9 @@ const Home: FC = () => {
         <Flex align="center" justify="space-between">
           <Title order={4}>{t('journeysListTitle')}</Title>
           <Group gap="xs" wrap="nowrap">
-            <TextInput
-              placeholder={t('common:search')}
-              value={search}
-              onChange={setSearch}
-              rightSection={search !== '' ? <Input.ClearButton onClick={() => setSearch('')} /> : <TbSearch />}
-            />
-            <Tooltip withArrow label="Coming soon">
-              <ActionIcon size="lg" disabled>
-                <TbFilter />
-              </ActionIcon>
-            </Tooltip>
+            <ActionIcon size="lg" onClick={openFilters} disabled>
+              <TbFilter />
+            </ActionIcon>
           </Group>
         </Flex>
         <Box mih={250} pos="relative">
@@ -80,6 +99,9 @@ const Home: FC = () => {
               <JourneyCard key={journey.id} journey={journey} handleShareBoat={handleOpenModalAddPeople} />
             ))}
           </Stack>
+          <Center mt="xs">
+            <Text size="xs">{t('journeysCount', { count: formattedJourneys.length })}</Text>
+          </Center>
           {!allJourneyLoading && formattedJourneys.length === 0 && (
             <Text mt="xl" ta="center">
               {t('noJourney')}
@@ -195,6 +217,7 @@ const Home: FC = () => {
           </Stack>
         </form>
       </Modal>
+      <JourneyFilters opened={openedFilters} onClose={closeFilters} islands={formattedIslands} onSubmit={() => {}} />
     </Stack>
   );
 };

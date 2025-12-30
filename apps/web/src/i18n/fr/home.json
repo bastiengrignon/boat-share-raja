@@ -2,6 +2,12 @@
   "addJourney": "Ajouter un trajet",
   "journeysListTitle": "Trajets à venir",
   "noJourney": "Aucun trajet à venir",
+  "journeysCount_one": "{{count}} trajet",
+  "journeysCount_other": "{{count}} trajets",
+  "hero": {
+    "title": "Profite du partage en économisant",
+    "text": "Partage les transferts en bateau entres les îles de Raja Ampat pour <text>économiser</text> et <text>sociabiliser.</text>"
+  },
   "journeyCard": {
     "peopleOnboard": "{{current}} / {{maximum}} max",
     "publishedBy": "Publié par {{name}}",
@@ -44,5 +50,11 @@
   },
   "editModal": {
     "title": "Modifier le trajet"
+  },
+  "filters": {
+    "title": "Filtres",
+    "departure": "Départ",
+    "arrival": "Arrivée",
+    "date": "Date de départ"
   }
 }

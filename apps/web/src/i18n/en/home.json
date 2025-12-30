@@ -2,6 +2,12 @@
   "addJourney": "Add a journey",
   "journeysListTitle": "Upcoming journeys",
   "noJourney": "No upcoming journey",
+  "journeysCount_one": "{{count}} journey",
+  "journeysCount_other": "{{count}} journeys",
+  "hero": {
+    "title": "Enjoy sharing while saving",
+    "text": "Share boat transfer between Raja Ampat islands to <text>save</text> et <text>socialize.</text>"
+  },
   "journeyCard": {
     "peopleOnboard": "{{current}} / {{maximum}} max",
     "publishedBy": "Published by {{name}}",
@@ -46,5 +52,11 @@
   },
   "editModal": {
     "title": "Edit journey"
+  },
+  "filters": {
+    "title": "Filters",
+    "departure": "Departure",
+    "arrival": "Arrival",
+    "date": "Departure date"
   }
 }

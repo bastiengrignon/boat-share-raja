@@ -1,6 +1,6 @@
 import type { CreateJourney, Island, Journey } from '@boat-share-raja/shared-types';
 import { hasLength, isInRange, isNotEmpty, type TransformedValues, useForm } from '@mantine/form';
-import { useDisclosure, useInputState } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import type { TFunction } from 'i18next';
@@ -22,13 +22,14 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
   const queryClient = useQueryClient();
   const { user } = useAuthSession();
 
-  const [search, setSearch] = useInputState('');
+  const [heroDisplay, setHeroDisplay] = useState(true);
   const [openedModalAddJourney, { open: openModalAddJourney, close: closeModalAddJourney }] = useDisclosure(false);
   const [openedModalAddPeopleToJourney, { open: openModalAddPeopleToJourney, close: closeModalAddPeopleToJourney }] =
     useDisclosure(false);
   const [addPeopleModalObject, setAddPeopleModalObject] = useState<{ journeyId: string; maxPeople: number } | null>(
     null
   );
+  const [openedFilters, { open: openFilters, close: closeFilters }] = useDisclosure(false);
 
   const addJourneyForm = useForm({
     initialValues: {
@@ -57,7 +58,7 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
       ...values,
       user: {
         // biome-ignore lint/style/noNonNullAssertion: user is defined
-        id: user?.id!,
+        id: user!.id,
         name: fullName,
       },
     }),
@@ -114,18 +115,13 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
 
   const formattedJourneys = useMemo<Journey[]>(
     () =>
-      (allJourney?.data?.journeys || [])
-        .filter(
-          (journey: Journey) =>
-            (journey?.user?.name || '').toLowerCase().includes(search.toLowerCase()) ||
-            journey.from.toLowerCase().includes(search.toLowerCase()) ||
-            journey.to.toLowerCase().includes(search.toLowerCase())
-        )
-        .sort((a: Journey, b: Journey) => new Date(a.date).valueOf() - new Date(b.date).valueOf()),
-    [allJourney, search]
+      (allJourney?.data?.journeys || []).sort(
+        (a: Journey, b: Journey) => new Date(a.date).valueOf() - new Date(b.date).valueOf()
+      ),
+    [allJourney]
   );
 
-  const formattedIslands = useMemo(
+  const formattedIslands = useMemo<string[]>(
     () => (allIslands?.data?.islands || []).map((island: Island) => island.name).sort(),
     [allIslands?.data?.islands]
   );
@@ -185,18 +181,21 @@ export const useHomeHooks = ({ t }: HomeHooksInput) => {
   }, []);
 
   return {
-    search,
+    heroDisplay,
     openedModalAddJourney,
     openedModalAddPeopleToJourney,
     addJourneyForm,
     addPeopleToBoatForm,
     formattedJourneys,
     formattedIslands,
+    openedFilters,
     allJourneyLoading,
     allIslandsLoading,
     addJourneyLoading,
     addPeopleToBoatLoading,
-    setSearch,
+    openFilters,
+    closeFilters,
+    setHeroDisplay,
     openModalAddJourney,
     handleSubmitJourney,
     handleCloseModal,
