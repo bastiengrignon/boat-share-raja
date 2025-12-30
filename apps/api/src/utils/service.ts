@@ -27,3 +27,8 @@ export const createService =
       };
     }
   };
+
+export const returnService = <T>(reply: FastifyReply, response: ApiResult<T>): FastifyReply => {
+  const statusCode = response.status === 'SUCCESS' ? 200 : 400;
+  return reply.status(statusCode).send(response);
+};

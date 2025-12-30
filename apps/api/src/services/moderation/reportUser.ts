@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createService } from '../../utils/service';
+import { createService, returnService } from '../../utils/service';
 
 const reportUserBodySchema = z.object({
   userId: z.string(),
@@ -10,15 +10,15 @@ const reportUserBodySchema = z.object({
 
 export const reportUser = createService<{ Body: z.infer<typeof reportUserBodySchema> }, { report: object }>(
   'reportUser',
-  async (req) => {
+  async (req, rep) => {
     const { userId, reportedUserId, reason } = req.body;
 
     if (userId === reportedUserId) {
-      return {
+      return returnService(rep, {
         status: 'ERROR',
         error: 'CANNOT_REPORT_YOURSELF',
         data: null,
-      };
+      });
     }
 
     const report = await req.prisma.userReport.create({
@@ -29,9 +29,9 @@ export const reportUser = createService<{ Body: z.infer<typeof reportUserBodySch
       },
     });
 
-    return {
+    return returnService(rep, {
       status: 'SUCCESS',
       data: { report },
-    };
+    });
   }
 );

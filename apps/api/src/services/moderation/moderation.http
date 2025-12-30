@@ -1,0 +1,64 @@
+### Block user SUCCESS
+POST http://localhost:4000/api/moderation/block
+Content-Type: application/json
+
+{
+  "userId": "{{$random.uuid}}",
+  "blockedUserId": "{{$random.uuid}}"
+}
+
+### Block user CANNOT_BLOCK_YOURSELF
+POST http://localhost:4000/api/moderation/block
+Content-Type: application/json
+
+{
+  "userId": "376ef580-bda5-404b-b923-612aaac273b5",
+  "blockedUserId": "376ef580-bda5-404b-b923-612aaac273b5"
+}
+
+> {%
+  client.assert(response.status === 400)
+  client.assert(response.body.status === 'ERROR')
+  client.assert(response.body.error === 'CANNOT_BLOCK_YOURSELF')
+%}
+
+### Block user USER_NOT_FOUND
+POST http://localhost:4000/api/moderation/block
+Content-Type: application/json
+
+{
+  "userId": "{{$random.uuid}}",
+  "blockedUserId": "376ef580-bda5-404b-b923-612aaac273b5"
+}
+
+> {%
+  client.assert(response.status === 400)
+  client.assert(response.body.status === 'ERROR')
+  client.assert(response.body.error === 'USER_NOT_FOUND')
+%}
+
+#### Block user ERROR USER_TO_BLOCK_NOT_FOUND
+POST http://localhost:4000/api/moderation/block
+Content-Type: application/json
+
+{
+  "userId": "4ef9c3c1-f9da-4001-8ade-87cb0f7d82f9",
+  "blockedUserId": "{{$random.uuid}}"
+}
+
+> {%
+  client.assert(response.status === 400)
+  client.assert(response.body.status === 'ERROR')
+  client.assert(response.body.error === 'USER_TO_BLOCK_NOT_FOUND')
+%}
+
+
+### Report user
+POST http://localhost:4000/api/moderation/report
+Content-Type: application/json
+
+{
+  "userId": "{{$random.uuid}}",
+  "reportedUserId": "",
+  "reason": "User is insulting me"
+}

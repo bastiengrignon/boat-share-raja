@@ -1,0 +1,11 @@
+### POST send support email
+POST http://localhost:4000/api/contact
+Content-Type: application/json
+
+{
+  "email": "test@email.com",
+  "name": "Tester",
+  "subject": "Test HTTP email",
+  "userId": "{{$random.uuid}}",
+  "message": "New HTTP message email"
+}
