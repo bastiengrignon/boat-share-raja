@@ -23,7 +23,7 @@
   "devDependencies": {
     "@boat-share-raja/typescript-config": "*",
     "typescript": "^5.9.3",
-    "zod": "^4.2.1"
+    "zod": "^4.3.2"
   },
   "volta": {
     "node": "22.21.1",
